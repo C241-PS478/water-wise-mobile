@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/miHome"
+        android:title="@string/btnHome"
+        android:icon="@drawable/ic_home" />
+
+    <item android:id="@+id/miSearch"
+        android:title="@string/btnNews"
+        android:icon="@drawable/ic_news" />
+
+    <item android:id="@+id/placeholder"
+        android:title="" />
+
+    <item android:id="@+id/miProfile"
+        android:title="@string/btnStore"
+        android:icon="@drawable/ic_store" />
+
+    <item android:id="@+id/miSettings"
+        android:title="@string/btnAccount"
+        android:icon="@drawable/ic_account" />
+</menu>
