@@ -39,6 +39,5 @@ class MainActivity : AppCompatActivity() {
             recyclerView = findViewById(R.id.news_recycler_view)
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        }
     }
 }
