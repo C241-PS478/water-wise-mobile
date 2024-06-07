@@ -57,4 +57,5 @@ dependencies {
     // Custom Component
     implementation(libs.material)
     implementation (libs.lottie)
+    implementation (libs.androidx.viewpager2)
 }

@@ -44,7 +44,6 @@
                 app:itemIconTint="@drawable/bottom_nav_item_selected"
                 app:itemTextColor="@drawable/bottom_nav_item_selected" />
 
-
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

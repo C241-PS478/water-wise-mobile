@@ -9,6 +9,10 @@
     <string name="btnAccount">Account</string>
 
     <!--Login Register-->
+    <string name="nextBtn">Next</string>
+    <string name="title_intro">Title Intro</string>
+    <string name="desc_intro">Description Intro</string>
+    <string name="image_intro">Image Intro</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
