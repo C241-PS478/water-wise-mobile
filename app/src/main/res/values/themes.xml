@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.WaterWise" parent="Base.Theme.WaterWise" />
+
+    <style name="toolbar">
+        <item name="android:background">@drawable/toolbar_background</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
 </resources>
