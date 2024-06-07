@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import bangkit.capstone.waterwise.R
-import bangkit.capstone.waterwise.adapter.IntroPagerAdapter
+import bangkit.capstone.waterwise.data.adapter.IntroPagerAdapter
 import bangkit.capstone.waterwise.data.model.IntroItem
 import bangkit.capstone.waterwise.databinding.ActivityIntroBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -20,9 +20,7 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityIntroBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+        setContentView(R.layout.activity_intro)
 
         introItems = listOf(
             IntroItem(R.drawable.intro_illustration_1, "Welcome to WaterWise!", "Experience the power of technology in ensuring clean water. WaterWise helps you detect water clarity and share your findings with others. Join a global community committed to clean water."),
