@@ -1,0 +1,12 @@
+<!-- res/drawable/bottom_app_bar_gradient.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="@color/seaBlue"
+                android:endColor="@color/pearlBlue"
+                android:type="linear" />
+        </shape>
+    </item>
+</layer-list>
