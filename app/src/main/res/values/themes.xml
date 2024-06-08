@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.WaterWise" parent="Theme.MaterialComponents.Light">
+    <style name="Base.Theme.WaterWise" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/seaBlue</item>
         <item name="colorPrimaryDark">@color/pearlBlue</item>
         <item name="colorAccent">@color/white</item>
@@ -11,6 +11,7 @@
         <item name="android:background">@drawable/toolbar_background</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
       
     <style name="Theme.WaterWise" parent="Base.Theme.WaterWise">
         <item name="android:popupBackground">@color/white</item>

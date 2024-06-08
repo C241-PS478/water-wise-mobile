@@ -6,4 +6,9 @@
     <style name="rounded_20">
         <item name="cornerSize">20%</item>
     </style>
+    <style name="gradient_color_vertical">
+        <item name="android:startColor">@color/primary_100</item>
+        <item name="android:endColor">@color/primary_200</item>
+        <item name="android:angle">90</item>
+    </style>
 </resources>
