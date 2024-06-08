@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary_100">#216A8F</color>
+    <color name="primary_200">#001C32</color>
+
     <color name="black">#101010</color>
     <color name="grey">#858585</color>
     <color name="white">#F8F8F8</color>
     <color name="seaBlue">#216A8F</color>
     <color name="pearlBlue">#001C32</color>
+
 </resources>

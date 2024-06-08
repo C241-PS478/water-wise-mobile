@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="134dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/news_image"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/rounded_20"
+                app:srcCompat="@drawable/news" />
+
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_width="239dp"
+                android:layout_height="102dp"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/news_image"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Indonesia Serukan Kesetaraan Akses Air Bersih di Pulau-Pulau Kecil abwdk baw dakjw bdk awd awd wad aw awd awd awdawdawd " />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/news_source_logo"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="5dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/rounded_full"
+                app:layout_constraintBottom_toBottomOf="@+id/news_source"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/news_source"
+                app:layout_constraintVertical_bias="0.25"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/news_source"
+                android:layout_width="52dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="5dp"
+                android:paddingStart="5dp"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/news_source_logo"
+                app:layout_constraintTop_toBottomOf="@+id/news_title"
+                tools:text="Liputan6" />
+
+            <TextView
+                android:id="@+id/news_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:paddingStart="5dp"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/news_source"
+                app:layout_constraintEnd_toStartOf="@+id/news_image"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/news_source"
+                app:layout_constraintTop_toTopOf="@+id/news_source"
+                tools:text="8 Mei 2024, 19:25 WIB" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

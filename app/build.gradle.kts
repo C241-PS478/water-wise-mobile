@@ -35,6 +35,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -53,6 +54,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.retrofit)
+    implementation (libs.retrofit2.converter.gson)
+    implementation(libs.logging.interceptor)
 
     // Custom Component
     implementation(libs.material)
