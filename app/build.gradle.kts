@@ -62,4 +62,8 @@ dependencies {
     // Custom Component
     implementation(libs.material)
     implementation (libs.lottie)
+
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.lifecycle)
 }
