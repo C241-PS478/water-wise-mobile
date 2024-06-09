@@ -24,6 +24,13 @@
     <string name="invalid_email">Must be fill by Email</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="prompt_first_name">First Name</string>
+    <string name="prompt_last_name">Last Name</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_google">Continue with Google</string>
+    <string name="text_OR">OR</string>
+
 
     <string name="prompt_first_name">First Name</string>
     <string name="prompt_last_name">Last Name</string>
