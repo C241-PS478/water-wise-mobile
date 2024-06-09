@@ -9,7 +9,6 @@
     tools:context=".ui.MainActivity"
     tools:ignore="ExtraText">
     tools:context=".ui.MainActivity">
-    tools:context=".ui.MainActivity">
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -24,17 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/progressBar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:lottie_fileName="loadingWater.json"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
