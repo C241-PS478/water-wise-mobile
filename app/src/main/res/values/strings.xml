@@ -24,4 +24,11 @@
     <!--Camera-->
     <string name="open_gallery">Open Gallery</string>
     <string name="identify">Identify</string>
+
+    <!--Detect Result-->
+    <string name="water_quality_title">Water Quality</string>
+    <string name="drinkAbility_label">Drinkability</string>
+    <string name="result_desc">
+        Add description to explain the water source location and any related. Thank you for your contribution to helping others to get clean water source
+    </string>
 </resources>

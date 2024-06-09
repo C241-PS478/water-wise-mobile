@@ -8,4 +8,6 @@
     <color name="white">#F8F8F8</color>
     <color name="seaBlue">#216A8F</color>
     <color name="pearlBlue">#001C32</color>
+
+    <color name="success_badge">#58F255</color>
 </resources>
