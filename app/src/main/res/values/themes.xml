@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/seaBlue</item>
         <item name="colorPrimaryDark">@color/pearlBlue</item>
         <item name="colorAccent">@color/white</item>
+        <item name="textFillColor">@color/grey</item>
         <item name="backgroundColor">@color/white</item>
     </style>
 

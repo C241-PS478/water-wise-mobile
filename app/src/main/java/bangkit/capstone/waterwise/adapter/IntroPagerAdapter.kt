@@ -1,4 +1,4 @@
-package bangkit.capstone.waterwise.data.adapter
+package bangkit.capstone.waterwise.adapter
 
 import android.view.LayoutInflater
 import android.view.View
