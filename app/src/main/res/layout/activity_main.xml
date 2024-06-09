@@ -10,7 +10,6 @@
     tools:ignore="ExtraText">
     tools:context=".ui.MainActivity">
 
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressBar"
         android:layout_width="40dp"
