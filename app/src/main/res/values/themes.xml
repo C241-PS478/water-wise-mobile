@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/seaBlue</item>
         <item name="colorPrimaryDark">@color/pearlBlue</item>
         <item name="colorAccent">@color/white</item>
+        <item name="textFillColor">@color/grey</item>
         <item name="backgroundColor">@color/white</item>
     </style>
 
@@ -12,7 +13,7 @@
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
-      
+  
     <style name="Theme.WaterWise" parent="Base.Theme.WaterWise">
         <item name="android:popupBackground">@color/white</item>
     </style>

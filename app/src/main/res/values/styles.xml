@@ -11,7 +11,11 @@
         <item name="android:endColor">@color/primary_200</item>
         <item name="android:angle">90</item>
     </style>
+  
     <style name="rounded_full_bg_white">
         <item name="android:background">@drawable/rounded_bg_white</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.TextInputLayout.Rounded" parent="">
+        <item name="cornerSize">16dp</item>
     </style>
 </resources>
