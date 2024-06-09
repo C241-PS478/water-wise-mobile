@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/location_user"
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/lato" />
 
             </LinearLayout>
@@ -226,7 +226,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:backgroundTint="@color/pearlBlue"
-            app:fabCradleMargin="16dp"
+            app:fabCradleMargin="20dp"
             app:fabCradleRoundedCornerRadius="20dp"
             app:fabCradleVerticalOffset="10dp"
             tools:ignore="VisualLintBottomAppBar">
@@ -244,7 +244,7 @@
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_scanner"
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/seaBlue"

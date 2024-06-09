@@ -106,7 +106,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="40dp"
             android:fontFamily="@font/poppins_medium"
             android:ems="10"
             android:inputType="textEmailAddress"
@@ -143,7 +143,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         app:endIconMode="password_toggle"
@@ -154,7 +154,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="40dp"
             android:fontFamily="@font/poppins_medium"
             android:ems="10"
             android:inputType="textPassword"
@@ -165,7 +165,7 @@
     <Button
         android:id="@+id/loginButton"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="55dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
@@ -175,7 +175,6 @@
         android:textSize="14sp"
         android:fontFamily="@font/poppins_semibold"
         android:textColor="?attr/backgroundColor"
-        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"
@@ -198,25 +197,18 @@
         app:layout_constraintBottom_toTopOf="@id/googleButton" />
 
     <!-- Button untuk Google Login -->
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/googleButton"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="55dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_google_rounded"
-        android:backgroundTint="@color/white"
         android:text="@string/btn_google"
         android:textSize="14sp"
         android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        app:backgroundTint="@null"
-        app:icon="@drawable/ic_google"
-        app:iconTint="@null"
-        app:iconSize="32dp"
-        app:iconGravity="textStart"
+        android:textColor="?attr/backgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textOr" />
