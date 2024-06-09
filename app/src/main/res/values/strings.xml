@@ -31,24 +31,8 @@
     <string name="btn_google">Continue with Google</string>
     <string name="text_OR">OR</string>
 
-    <!--Main Page-->
-    <string name="hello_user">Hello, App User !</string>
-    <string name="location_user">Kab. Badung, Bali, Indonesia</string>
-    <string name="maps_on_main">Open Maps</string>
-    <string name="feature_on_main">Pendeteksi air AI</string>
-    <string name="button_detect_image">Deteksi gambar</string>
-    <string name="button_detect_data">Deteksi data</string>
-    <string name="news_on_main">Kabar air terkini</string>
 
     <!--Camera-->
     <string name="open_gallery">Open Gallery</string>
     <string name="identify">Identify</string>
-
-    <!--Detect Result-->
-    <string name="water_quality_title">Water Quality</string>
-    <string name="drinkAbility_label">Drinkability</string>
-    <string name="result_desc">
-        Add description to explain the water source location and any related. Thank you for your contribution to helping others to get clean water source
-    </string>
-    <string name="water_safe_to_consume">This water is safe to consume</string>
 </resources>

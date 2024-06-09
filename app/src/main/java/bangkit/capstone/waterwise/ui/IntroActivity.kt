@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import bangkit.capstone.waterwise.R
-import bangkit.capstone.waterwise.data.adapter.IntroPagerAdapter
+import bangkit.capstone.waterwise.adapter.IntroPagerAdapter
 import bangkit.capstone.waterwise.data.model.IntroItem
 import bangkit.capstone.waterwise.databinding.ActivityIntroBinding
 import com.google.android.material.tabs.TabLayoutMediator
