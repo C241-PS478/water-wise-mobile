@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="@string/app_name"
         android:textColor="?attr/colorPrimary"
@@ -92,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/poppins_medium"
         android:text="@string/prompt_email"
         android:textColor="?attr/textFillColor"
@@ -162,7 +162,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Button untuk Login -->
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/loginButton"
         android:layout_width="0dp"
         android:layout_height="56dp"
@@ -197,7 +197,8 @@
         app:layout_constraintTop_toBottomOf="@+id/loginButton"
         app:layout_constraintBottom_toTopOf="@id/googleButton" />
 
-    <com.google.android.gms.common.SignInButton
+    <!-- Button untuk Google Login -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/googleButton"
         android:layout_width="0dp"
         android:layout_height="56dp"
