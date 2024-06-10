@@ -13,7 +13,7 @@
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
-
+  
     <style name="Theme.WaterWise" parent="Base.Theme.WaterWise">
         <item name="android:popupBackground">@color/white</item>
     </style>

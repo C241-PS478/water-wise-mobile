@@ -10,6 +10,83 @@
     tools:ignore="ExtraText">
     tools:context=".ui.MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/photo_acc"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/example_photo_acc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/text_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@id/photo_acc"
+            app:layout_constraintTop_toTopOf="@id/photo_acc"
+            app:layout_constraintBottom_toBottomOf="@id/photo_acc">
+
+            <TextView
+                android:id="@+id/title_hello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_user"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/poppins_medium" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_location"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="@string/location_user" />
+
+                <TextView
+                    android:id="@+id/location_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location_user"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/lato" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_notification"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/notification_button_background"
+            android:padding="5dp"
+            android:src="@drawable/ic_notification"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressBar"
@@ -25,17 +102,20 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:fabCradleMargin="20dp"
-            app:fabCradleVerticalOffset="10dp"
-            app:fabCradleRoundedCornerRadius="20dp"
             android:layout_gravity="bottom"
             app:backgroundTint="@color/pearlBlue"
+            app:fabCradleMargin="20dp"
+            app:fabCradleRoundedCornerRadius="20dp"
+            app:fabCradleVerticalOffset="10dp"
             tools:ignore="VisualLintBottomAppBar">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -44,9 +124,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:background="@android:color/transparent"
-                app:menu="@menu/navbar_menu"
                 app:itemIconTint="@drawable/bottom_nav_item_selected"
-                app:itemTextColor="@drawable/bottom_nav_item_selected" />
+                app:itemTextColor="@drawable/bottom_nav_item_selected"
+                app:menu="@menu/navbar_menu" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
@@ -54,8 +134,8 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:importantForAccessibility="no"
             android:backgroundTint="@color/seaBlue"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_scan"
             app:layout_anchor="@id/bottomAppBar"
             app:tint="@android:color/white" />
