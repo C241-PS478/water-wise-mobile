@@ -62,6 +62,9 @@ dependencies {
     // Custom Component
     implementation(libs.material)
     implementation (libs.lottie)
+    // Image loading and manipulation
+    implementation(libs.glide)
+    implementation(libs.circleimageview) // Circular ImageView
 
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.view)
