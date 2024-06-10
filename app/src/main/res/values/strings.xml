@@ -32,6 +32,10 @@
     <string name="btn_google">Continue with Google</string>
     <string name="text_OR">OR</string>
 
+    <!--Main Page-->
+    <string name="hello_user">Hello, App User !</string>
+    <string name="location_user">Kab. Badung, Bali, Indonesia</string>
+
     <!--Camera-->
     <string name="open_gallery">Open Gallery</string>
     <string name="identify">Identify</string>
