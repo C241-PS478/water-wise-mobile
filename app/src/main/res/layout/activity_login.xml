@@ -118,7 +118,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_rounded"
-        app:backgroundTint="@null"
+        android:backgroundTint="@null"
         android:text="@string/btn_login"
         android:textAllCaps="false"
         android:textSize="14sp"
@@ -137,7 +137,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_rounded"
-        app:backgroundTint="@null"
         android:text="@string/btn_register"
         android:textAllCaps="false"
         android:textSize="14sp"
@@ -162,7 +161,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerButton"
         app:layout_constraintBottom_toTopOf="@id/googleButton" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/googleButton"
         android:layout_width="0dp"
         android:layout_height="56dp"
@@ -175,12 +174,8 @@
         android:fontFamily="@font/poppins_semibold"
         android:textColor="@color/black"
         android:textAllCaps="false"
+        android:drawableStart="@drawable/ic_google"
         android:drawablePadding="8dp"
-        app:backgroundTint="@null"
-        app:icon="@drawable/ic_google"
-        app:iconTint="@null"
-        app:iconSize="32dp"
-        app:iconGravity="textStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerButton"
