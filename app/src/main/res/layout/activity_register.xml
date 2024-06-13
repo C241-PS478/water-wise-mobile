@@ -10,7 +10,7 @@
 
     <!-- Logo -->
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/logo_app"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="@string/app_name"
