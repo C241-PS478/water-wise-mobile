@@ -1,4 +1,4 @@
-package bangkit.capstone.waterwise.ui
+package bangkit.capstone.waterwise.ui.authentication
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

@@ -1,4 +1,4 @@
-package bangkit.capstone.waterwise.news
+package bangkit.capstone.waterwise.ui.news
 import com.google.gson.annotations.SerializedName
 
 data class Types(

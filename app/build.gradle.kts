@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id ("kotlin-android")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -51,6 +52,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.runtime.android)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -58,6 +60,8 @@ dependencies {
     implementation (libs.retrofit2.converter.gson)
     implementation(libs.logging.interceptor)
     implementation (libs.kotlin.stdlib)
+
+    implementation(libs.play.services.auth)
 
     // Custom Component
     implementation(libs.material)
