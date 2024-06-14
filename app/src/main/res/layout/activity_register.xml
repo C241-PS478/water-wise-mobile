@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
-    tools:context=".ui.RegisterActivity">
+    tools:context=".ui.authentication.RegisterActivity">
 
     <!-- Logo -->
     <ImageView
@@ -197,8 +197,7 @@
         app:layout_constraintTop_toBottomOf="@+id/loginButton"
         app:layout_constraintBottom_toTopOf="@id/googleButton" />
 
-    <!-- Button untuk Google Login -->
-    <com.google.android.material.button.MaterialButton
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/googleButton"
         android:layout_width="0dp"
         android:layout_height="56dp"

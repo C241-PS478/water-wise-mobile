@@ -1,4 +1,4 @@
-package bangkit.capstone.waterwise.news.ui
+package bangkit.capstone.waterwise.ui.news.ui
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

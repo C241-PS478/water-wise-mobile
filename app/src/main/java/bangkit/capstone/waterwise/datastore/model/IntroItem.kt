@@ -1,4 +1,4 @@
-package bangkit.capstone.waterwise.data.model
+package bangkit.capstone.waterwise.datastore.model
 
 data class IntroItem(
     val image: Int,
