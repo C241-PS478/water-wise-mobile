@@ -11,8 +11,8 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.MutableLiveData
+import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.databinding.ActivityCameraBinding
 
 class CameraActivity : AppCompatActivity() {
@@ -21,6 +21,7 @@ class CameraActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private lateinit var openGalleryLauncher: ActivityResultLauncher<Intent>
+    private var isFlashOn = MutableLiveData<Boolean>(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +29,27 @@ class CameraActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        with(binding) {
+            btnCapture.setOnClickListener {
+                val intent = Intent(this@CameraActivity, DetectResult::class.java)
+                startActivity(intent)
+            }
+
+            btnClose.setOnClickListener {
+                finish()
+            }
+
+            btnFlash.setOnClickListener {
+                isFlashOn.value = !isFlashOn.value!!
+            }
+        }
+
+        isFlashOn.observe(this) {
+            if (it) {
+                binding.btnFlash.setImageResource(R.drawable.flash_on)
+            } else {
+                binding.btnFlash.setImageResource(R.drawable.ic_flash_off)
+            }
         }
 
         startCamera()
@@ -51,11 +69,15 @@ class CameraActivity : AppCompatActivity() {
 
             try {
                 cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
+                val camera = cameraProvider.bindToLifecycle(
                     this,
                     cameraSelector,
                     preview,
                 )
+
+                isFlashOn.observe(this) {
+                    camera.cameraControl.enableTorch(it)
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

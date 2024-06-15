@@ -47,4 +47,7 @@
         Add description to explain the water source location and any related. Thank you for your contribution to helping others to get clean water source
     </string>
     <string name="water_safe_to_consume">This water is safe to consume</string>
+    <string name="water_not_safe_to_consume">This water is not safe to consume</string>
+    <string name="result_drinkable">Drinkable</string>
+    <string name="result_not_drinkable">Not Drinkable</string>
 </resources>

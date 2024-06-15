@@ -17,7 +17,7 @@
         android:src="@drawable/arrow_left"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
          />
 
     <ImageButton
@@ -25,17 +25,17 @@
         style="@style/rounded_full_bg_white"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/location_arrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:background="@drawable/water_detection_result_bg"
-        android:paddingHorizontal="23dp"
+        android:paddingHorizontal="20dp"
         android:paddingVertical="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +45,7 @@
             android:id="@+id/water_quality_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
             android:text="@string/water_quality_title"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -53,7 +54,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton2"
+            android:id="@+id/send_review_btn_result"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:text="Send your review"
@@ -69,34 +70,57 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/arrow_down_icon"
             android:layout_width="16dp"
             android:layout_height="16dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/arrow_to_down_right"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageView" />
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
+            android:id="@+id/prediction_method_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:textColor="#979797"
             android:text="Predict by Data"
+            android:textColor="#979797"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="@+id/imageView3"
-             />
+            app:layout_constraintStart_toEndOf="@+id/arrow_down_icon"
+            app:layout_constraintTop_toTopOf="@+id/arrow_down_icon" />
 
-        <ImageView
+        <RelativeLayout
             android:id="@+id/imageView"
-            android:layout_width="88dp"
-            android:layout_height="92dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/ic_water_droplets"
+            android:layout_width="85dp"
+            android:layout_height="116dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/water_quality_title" />
+            app:layout_constraintTop_toBottomOf="@+id/water_quality_title">
+
+            <ImageView
+                android:id="@+id/water_droplet_icon_big"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="-19dp"
+                android:layout_marginTop="-23dp"
+                android:src="@drawable/ic_water_droplet"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/water_droplet_icon_small"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="-7dp"
+                android:layout_marginBottom="9dp"
+                android:src="@drawable/ic_water_droplet"
+                tools:layout_editor_absoluteX="30dp"
+                tools:layout_editor_absoluteY="32dp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/result_badge"
@@ -105,27 +129,29 @@
             android:background="@drawable/success_badge"
             android:paddingHorizontal="20dp"
             android:paddingVertical="6dp"
+            android:text="Drinkable"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="1.0"
-            tools:text="Drinkable" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="213dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="12dp"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/poppins"
+            android:text="@string/result_desc"
             android:textColor="#5E5E5E"
             android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/result_badge"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/materialButton2"
-            tools:text="@string/result_desc" />
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
