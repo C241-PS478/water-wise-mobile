@@ -10,4 +10,8 @@
     <color name="pearlBlue">#001C32</color>
 
     <color name="success_badge">#6DE86A</color>
+
+    <color name="toast_success">#6DE86A</color>
+    <color name="toast_error">#E33629</color>
+    <color name="toast_warning">#FDAF17</color>
 </resources>
