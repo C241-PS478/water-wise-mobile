@@ -75,4 +75,7 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
 
     implementation (libs.androidx.viewpager2)
+
+    // toast
+    implementation(libs.motiontoast)
 }

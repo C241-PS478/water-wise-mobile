@@ -19,6 +19,9 @@ class DetectWaterViewModel: ViewModel() {
     private val _isDrinkable = MutableLiveData<Boolean>()
     val isDrinkable: LiveData<Boolean> = _isDrinkable
 
+    private val _isSendReviewSuccess = MutableLiveData<Boolean>()
+    val isSendReviewSuccess: LiveData<Boolean> = _isSendReviewSuccess
+
     fun detectWater() {
         _isLoading.value = true
         _isDrinkable.value = true
@@ -27,6 +30,26 @@ class DetectWaterViewModel: ViewModel() {
         Handler(Looper.getMainLooper()).postDelayed({
             _isLoading.value = false
             _isSuccess.value = true
+        }, 3000)
+    }
+
+    fun detectWaterByData() {
+        _isLoading.value = true
+
+        // set delay for 3 seconds
+        Handler(Looper.getMainLooper()).postDelayed({
+            _isLoading.value = false
+            _isSuccess.value = true
+            _isDrinkable.value = false
+        }, 3000)
+    }
+
+    fun sendReview() {
+        _isLoading.value = true
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            _isLoading.value = false
+            _isSendReviewSuccess.value = true
         }, 3000)
     }
 }

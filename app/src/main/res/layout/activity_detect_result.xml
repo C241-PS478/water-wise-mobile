@@ -66,6 +66,7 @@
             app:backgroundTint="@null"
             app:icon="@drawable/map_with_pin"
             app:iconSize="15dp"
+            app:iconGravity="textEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

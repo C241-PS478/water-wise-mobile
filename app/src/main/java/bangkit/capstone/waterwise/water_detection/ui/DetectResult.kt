@@ -1,17 +1,22 @@
 package bangkit.capstone.waterwise.water_detection.ui
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.databinding.ActivityDetectResultBinding
 import bangkit.capstone.waterwise.utils.CustomToast
 import bangkit.capstone.waterwise.utils.Helper
 import bangkit.capstone.waterwise.water_detection.DetectWaterViewModel
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class DetectResult : AppCompatActivity() {
     private lateinit var binding : ActivityDetectResultBinding
@@ -31,7 +36,7 @@ class DetectResult : AppCompatActivity() {
 
         with(binding){
             sendReviewBtnResult.setOnClickListener {
-                showDialogInfo(this@DetectResult)
+                showSendReviewFormDialog(this@DetectResult)
             }
 
             btnBack.setOnClickListener {
@@ -49,15 +54,34 @@ class DetectResult : AppCompatActivity() {
             }
 
             isSuccess.observe(this@DetectResult) {
+//                if (it) {
+//                    binding.sendReviewBtnResult.isEnabled = false
+//                    binding.sendReviewBtnResult.isClickable = false
+//
+////                    customToast.apply {
+////                        setMessage("Review has been uploaded")
+////                        setGravity(yOffset = 30)
+////                        show()
+////                    }
+//
+//
+//                }
+            }
+
+            isSendReviewSuccess.observe(this@DetectResult) {
                 if (it) {
                     binding.sendReviewBtnResult.isEnabled = false
                     binding.sendReviewBtnResult.isClickable = false
 
-                    customToast.apply {
-                        setMessage("Review has been uploaded")
-                        setGravity(yOffset = 30)
-                        show()
-                    }
+                    MotionToast.createColorToast(
+                        this@DetectResult,
+                        title = "Success",
+                        message = "Review has been uploaded",
+                        style = MotionToastStyle.SUCCESS,
+                        position = Gravity.TOP,
+                        duration = MotionToast.LONG_DURATION,
+                        null
+                    )
                 }
             }
 
@@ -73,7 +97,7 @@ class DetectResult : AppCompatActivity() {
         }
     }
 
-    fun showDialogInfo(
+    fun showSendReviewFormDialog(
         context: Context,
     ) {
         val reviewDialog = Helper.dialogBuilder(context, R.layout.form_review_dialog, true)
@@ -84,10 +108,14 @@ class DetectResult : AppCompatActivity() {
 
         val submitBtn = reviewDialog.findViewById<Button>(R.id.send_review_btn)
         submitBtn.setOnClickListener {
-            detectWaterViewModel.detectWater()
+            detectWaterViewModel.sendReview()
             reviewDialog.dismiss()
         }
 
         reviewDialog.show()
+    }
+
+    private fun getFont(font: Int): Typeface?{
+        return ResourcesCompat.getFont(this, font)
     }
 }

@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="rounded_full">
         <item name="cornerSize">50%</item>
     </style>
+
     <style name="rounded_20">
         <item name="cornerSize">20%</item>
     </style>
+
     <style name="gradient_color_vertical">
         <item name="android:startColor">@color/primary_100</item>
         <item name="android:endColor">@color/primary_200</item>
         <item name="android:angle">90</item>
     </style>
-  
+
     <style name="rounded_full_bg_white">
         <item name="android:background">@drawable/rounded_bg_white</item>
     </style>
+
     <style name="ShapeAppearanceOverlay.TextInputLayout.Rounded" parent="">
         <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="Widget.Theme.WaterWise.MyView" parent="">
+        <item name="android:background">@color/gray_400</item>
+        <item name="exampleColor">@color/light_blue_400</item>
     </style>
 </resources>
