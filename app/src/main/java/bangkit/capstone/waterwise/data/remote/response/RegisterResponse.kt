@@ -1,4 +1,4 @@
-package bangkit.capstone.waterwise.remote.response
+package bangkit.capstone.waterwise.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 

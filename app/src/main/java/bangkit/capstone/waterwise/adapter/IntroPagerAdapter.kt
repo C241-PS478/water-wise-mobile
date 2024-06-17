@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.databinding.ItemIntroPageBinding
-import bangkit.capstone.waterwise.datastore.model.IntroItem
+import bangkit.capstone.waterwise.data.datastore.model.IntroItem
 import com.bumptech.glide.Glide
 
 class IntroPagerAdapter(private val introItems: List<IntroItem>) :

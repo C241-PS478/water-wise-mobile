@@ -160,10 +160,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerButton"
-        app:layout_constraintBottom_toTopOf="@id/googleButton" />
+        app:layout_constraintBottom_toTopOf="@id/googleSignInButton" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/googleButton"
+        android:id="@+id/googleSignInButton"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
@@ -206,8 +206,8 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressBar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         app:lottie_fileName="loadingWater.json"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"

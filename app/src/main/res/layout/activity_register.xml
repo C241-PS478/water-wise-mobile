@@ -40,50 +40,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal" />
 
-    <!-- TextInputLayout untuk First Name -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/firstNameETLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toStartOf="@+id/lastNameETLayout"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/prompt_name"
+        android:textColor="?attr/textFillColor"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        app:layout_constraintWidth_percent="0.4">
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/firstNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/prompt_first_name"
-            android:inputType="textPersonName" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- TextInputLayout untuk Last Name -->
+    <!-- TextInputLayout untuk Email -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/lastNameETLayout"
+        android:id="@+id/nameETLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/firstNameETLayout"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        app:layout_constraintWidth_percent="0.4">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/lastNameEditText"
+            android:id="@+id/nameEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/prompt_last_name"
-            android:inputType="textPersonName" />
+            android:layout_height="48dp"
+            android:fontFamily="@font/poppins_medium"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- TextView untuk Email -->
@@ -98,7 +88,7 @@
         android:textColor="?attr/textFillColor"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameETLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/nameETLayout" />
 
     <!-- TextInputLayout untuk Email -->
     <com.google.android.material.textfield.TextInputLayout
@@ -163,14 +153,14 @@
 
     <!-- Button untuk Login -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/loginButton"
+        android:id="@+id/registerButton"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_rounded"
-        android:text="@string/btn_login"
+        android:text="@string/btn_register"
         android:textAllCaps="false"
         android:textSize="14sp"
         android:fontFamily="@font/poppins_semibold"
@@ -194,7 +184,7 @@
         android:fontFamily="@font/poppins_semibold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/registerButton"
         app:layout_constraintBottom_toTopOf="@id/googleButton" />
 
     <com.google.android.gms.common.SignInButton
@@ -234,5 +224,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="150dp" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressBar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:lottie_fileName="loadingWater.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

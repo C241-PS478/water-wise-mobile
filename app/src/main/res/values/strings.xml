@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Water Wise</string>
     <string name="page_title_news">Kabar Air Terkini</string>
+    <string name="your_web_client_id">141611419842-c2f2jrsod68tbj5i7ih3ruc9b72ndiev.apps.googleusercontent.com</string>
 
 
     <!--Navbar-->
@@ -22,15 +23,23 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_email">Must be fill by Email</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-
-    <string name="prompt_first_name">First Name</string>
-    <string name="prompt_last_name">Last Name</string>
+    <string name="invalid_password">Password must in 8 characters or more</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_name">Name</string>
     <string name="btn_login">Login</string>
     <string name="btn_register">Register</string>
     <string name="btn_google">Continue with Google</string>
     <string name="text_OR">OR</string>
+    <string name="null_column">Fill in All Fields First</string>
+    <string name="null_name">Fill the name box</string>
+    <string name="null_email">Fill in the Email and Password first</string>
+    <string name="null_password">Fill the Password</string>
+    <string name="success_registration">Successful Registration! Your account has been successfully created.</string>
+    <string name="email_not_registered">Email not Registered</string>
+    <string name="wrong_password">Password that you enter is not correct</string>
+    <string name="login_success">Login Success!</string>
+    <string name="login_failed">Login Failed, Try Again!</string>
+    <string name="next">Next</string>
 
     <!--Main Page-->
     <string name="hello_user">Hello, App User !</string>

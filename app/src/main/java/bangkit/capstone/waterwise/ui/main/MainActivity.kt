@@ -1,4 +1,4 @@
-package bangkit.capstone.waterwise.ui
+package bangkit.capstone.waterwise.ui.main
 
 import android.Manifest
 import android.content.Intent
