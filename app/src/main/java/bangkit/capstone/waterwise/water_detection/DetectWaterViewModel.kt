@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import bangkit.capstone.waterwise.utils.Const
 import bangkit.capstone.waterwise.utils.Helper
+import bangkit.capstone.waterwise.water_detection.machine_learning.PotabilityIotModel
 import bangkit.capstone.waterwise.water_detection.machine_learning.WaterDetectionModel
 
 class DetectWaterViewModel: ViewModel() {
@@ -48,15 +49,23 @@ class DetectWaterViewModel: ViewModel() {
         _isLoading.value = false
     }
 
-    fun detectWaterByData() {
+    fun detectWaterByDataUsingModel(data: FloatArray, potabilityIotModel: PotabilityIotModel) {
         _isLoading.value = true
 
-        // set delay for 3 seconds
-        Handler(Looper.getMainLooper()).postDelayed({
-            _isLoading.value = false
+        // classify
+        try {
+            val result = potabilityIotModel.classify(data)
+            val roundedResult = Helper.roundUp(result[0])
             _isSuccess.value = true
-            _isDrinkable.value = false
-        }, 3000)
+            _cleanlinessPercentage.value = roundedResult.toFloat()
+
+            Log.d("RESULT_BY_DATA", "Result: ${result[0]}")
+            determineDrinkable(result[0])
+        } catch (e: Exception) {
+            _isError.value = true
+        }
+
+        _isLoading.value = false
     }
 
     fun sendReview() {

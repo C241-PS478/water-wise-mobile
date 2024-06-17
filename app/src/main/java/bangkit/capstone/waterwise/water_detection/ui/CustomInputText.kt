@@ -77,8 +77,17 @@ class CustomInputText @JvmOverloads constructor(
         unitTextView.text = unit
     }
 
-    private fun isEmpty(): Boolean {
+    fun isEditTextEmpty(): Boolean {
         return inputEditText.text.toString().isEmpty()
+    }
+
+    fun setReadOnly() {
+        inputEditText.apply {
+            isFocusable = false
+            isFocusableInTouchMode = false
+            isClickable = false
+            setTextIsSelectable(false)
+        }
     }
 
     private fun onChangeListener(){
@@ -87,7 +96,7 @@ class CustomInputText @JvmOverloads constructor(
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 errorTextView.apply {
-                    if(isEmpty()) {
+                    if(isEditTextEmpty()) {
                         text = "This field cannot be empty"
                         textInputLayout.boxStrokeColor = resources.getColor(R.color.toast_error)
                     } else {
