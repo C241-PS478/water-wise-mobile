@@ -37,6 +37,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        mlModelBinding = true
     }
 }
 
@@ -62,6 +63,7 @@ dependencies {
     implementation (libs.kotlin.stdlib)
 
     implementation(libs.play.services.auth)
+    implementation(libs.play.services.location)
 
     // Custom Component
     implementation(libs.material)
@@ -78,4 +80,10 @@ dependencies {
 
     // toast
     implementation(libs.motiontoast)
+
+    // tensor flow
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.lite.metadata)
+    implementation(libs.tensorflow.lite.gpu)
+    implementation(libs.tensorflow.lite.task.vision)
 }

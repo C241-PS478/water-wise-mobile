@@ -52,4 +52,9 @@
     <string name="result_not_drinkable">Not Drinkable</string>
     <string name="connect_with_iot">Connect with IoT</string>
     <string name="identifikasi">Identifikasi</string>
+    <string name="result_drinkable_desc">This water is drinkable</string>
+    <string name="result_not_drinkable_desc">This water is not drinkable</string>
+
+    <!--Error Message-->
+    <string name="error_msg_permission_gps">Please enable GPS to use this feature</string>
 </resources>

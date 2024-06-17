@@ -3,14 +3,22 @@ package bangkit.capstone.waterwise.utils
 import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
+import android.location.LocationManager
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.exifinterface.media.ExifInterface
 import bangkit.capstone.waterwise.R
+import java.io.File
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 object Helper {
     fun isPermissionGranted(context: Context, permission: String) =
@@ -65,5 +73,34 @@ object Helper {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
         return dialog
+    }
+
+    fun rotateBitmap(bitmap: Bitmap, orientation: Int): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(orientation.toFloat())
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
+
+    fun getImageOrientation(file: File): Int {
+        val ei = ExifInterface(file)
+        return when (ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> 90
+            ExifInterface.ORIENTATION_ROTATE_180 -> 180
+            ExifInterface.ORIENTATION_ROTATE_270 -> 270
+            else -> 0
+        }
+    }
+
+    fun roundUp(number: Number): Number {
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.CEILING
+        return df.format(number).toFloat()
+    }
+
+    fun isGPSEnabled (context: Context): Boolean {
+        val gpsService = getSystemService(context, LocationManager::class.java) as LocationManager
+        val isEnabled = gpsService.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+        return isEnabled
     }
 }

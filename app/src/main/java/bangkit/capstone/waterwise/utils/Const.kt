@@ -6,4 +6,6 @@ object Const {
         ERROR,
         WARNING
     }
+
+    const val CLEAN_WATER_THRESHOLD = 0.5
 }

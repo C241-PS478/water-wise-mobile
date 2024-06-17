@@ -1,10 +1,15 @@
 package bangkit.capstone.waterwise.water_detection
 
+import android.graphics.Bitmap
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import bangkit.capstone.waterwise.utils.Const
+import bangkit.capstone.waterwise.utils.Helper
+import bangkit.capstone.waterwise.water_detection.machine_learning.WaterDetectionModel
 
 class DetectWaterViewModel: ViewModel() {
     private val _isSuccess = MutableLiveData<Boolean>()
@@ -22,15 +27,25 @@ class DetectWaterViewModel: ViewModel() {
     private val _isSendReviewSuccess = MutableLiveData<Boolean>()
     val isSendReviewSuccess: LiveData<Boolean> = _isSendReviewSuccess
 
-    fun detectWater() {
-        _isLoading.value = true
-        _isDrinkable.value = true
+    private val _cleanlinessPercentage = MutableLiveData<Float>()
+    val cleanlinessPercentage: LiveData<Float> = _cleanlinessPercentage
 
-        // set delay for 3 seconds
-        Handler(Looper.getMainLooper()).postDelayed({
-            _isLoading.value = false
+    fun detectWaterUsingModel(bitmap: Bitmap, waterDetectionModel: WaterDetectionModel) {
+        _isLoading.value = true
+
+        // classify the image
+        try {
+            val result = waterDetectionModel.classify(bitmap)
+            val roundedResult = Helper.roundUp(result[0])
             _isSuccess.value = true
-        }, 3000)
+            _cleanlinessPercentage.value = roundedResult.toFloat()
+
+            Log.d("DetectWaterViewModel", "Result: ${result[0]}")
+            determineDrinkable(result[0])
+        } catch (e: Exception) {
+            _isError.value = true
+        }
+        _isLoading.value = false
     }
 
     fun detectWaterByData() {
@@ -51,5 +66,17 @@ class DetectWaterViewModel: ViewModel() {
             _isLoading.value = false
             _isSendReviewSuccess.value = true
         }, 3000)
+    }
+
+    fun setLoadingState(isLoading: Boolean) {
+        _isLoading.value = isLoading
+    }
+
+    private fun determineDrinkable(result: Float) {
+        return if (result > Const.CLEAN_WATER_THRESHOLD) {
+            _isDrinkable.value = true
+        } else {
+            _isDrinkable.value = false
+        }
     }
 }
