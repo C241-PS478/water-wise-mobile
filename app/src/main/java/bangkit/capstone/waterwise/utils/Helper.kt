@@ -19,6 +19,11 @@ import bangkit.capstone.waterwise.R
 import java.io.File
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 object Helper {
     fun isPermissionGranted(context: Context, permission: String) =
@@ -102,5 +107,30 @@ object Helper {
         val isEnabled = gpsService.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
         return isEnabled
+    }
+
+    private const val TIME_STAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    private const val SIMPLE_DATE_FORMAT = "dd MMM yyyy HH.mm"
+    private val simpleDate = SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.getDefault())
+
+    private fun getSimpleDate(date: Date): String = simpleDate.format(date)
+
+    private fun parseUTCDate(timestamp: String): Date {
+        return try {
+            val formatter = SimpleDateFormat(TIME_STAMP_FORMAT, Locale.getDefault())
+            formatter.timeZone = TimeZone.getTimeZone("UTC")
+            formatter.parse(timestamp) as Date
+        } catch (e: ParseException) {
+            getCurrentDate()
+        }
+    }
+
+    private fun getCurrentDate(): Date {
+        return Date()
+    }
+
+    fun getParsedDateToLocale(timestamp: String): String {
+        val date: Date = parseUTCDate(timestamp)
+        return getSimpleDate(date)
     }
 }
