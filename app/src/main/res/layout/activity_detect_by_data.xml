@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/water_source_sample_img"
+    tools:context=".water_detection.ui.DetectByDataActivity">
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        style="@style/rounded_full_bg_white"
+        android:src="@drawable/arrow_left"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_toMap"
+        style="@style/rounded_full_bg_white"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/location_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_rounded_top"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/water_quality_title"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/connect_iot_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="@string/connect_with_iot"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_primary_rounded"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_iot"
+            app:iconGravity="textEnd"
+            app:iconSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/send_review_btn_result"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Send your review"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_primary_rounded"
+            app:backgroundTint="@null"
+            app:icon="@drawable/map_with_pin"
+            app:iconSize="15dp"
+            app:iconGravity="textEnd"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
+            android:id="@+id/customInputText"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:editTextHeight="50dp"
+            app:editTextUnit="mg/L"
+            app:labelText="Kepadatan"
+            app:labelTextColor="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
+            android:id="@+id/customInputText2"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            app:editTextHeight="50dp"
+            app:editTextUnit="mg/L"
+            app:labelText="Klorin"
+            app:labelTextColor="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customInputText" />
+
+        <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
+            android:id="@+id/customInputText4"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            app:editTextHeight="50dp"
+            app:editTextUnit="mg/L"
+            app:labelText="Kekerasan"
+            app:labelTextColor="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customInputText2" />
+
+        <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
+            android:id="@+id/customInputText5"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            app:editTextHeight="50dp"
+            app:editTextUnit="mg/L"
+            app:labelText="Karbon"
+            app:labelTextColor="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/customInputText" />
+
+        <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
+            android:id="@+id/customInputText3"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            app:editTextHeight="50dp"
+            app:editTextUnit="mg/L"
+            app:labelText="Sulfat"
+            app:labelTextColor="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customInputText5" />
+
+        <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            app:editTextHeight="50dp"
+            app:editTextUnit="pH"
+            app:labelText="Keasaman"
+            app:labelTextColor="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customInputText3" />
+
+        <Button
+            android:id="@+id/identify_btn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/bg_primary_rounded"
+            android:text="@string/identifikasi"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customInputText4" />
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/success_badge"
+            android:fontFamily="@font/poppins_bold"
+            android:paddingHorizontal="26dp"
+            android:paddingVertical="12dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customInputText4"
+            tools:text="Drinkable"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

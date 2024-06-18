@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id ("kotlin-android")
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
@@ -41,6 +42,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        mlModelBinding = true
     }
 }
 
@@ -56,6 +58,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.runtime.android)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.play.services.maps)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.datastore.core.android)
     implementation(libs.androidx.room.common)
@@ -75,6 +78,7 @@ dependencies {
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
+    implementation(libs.play.services.location)
 
     // Custom Component
     implementation(libs.material)
@@ -88,4 +92,13 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
 
     implementation (libs.androidx.viewpager2)
+
+    // toast
+    implementation(libs.motiontoast)
+
+    // tensor flow
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.lite.metadata)
+    implementation(libs.tensorflow.lite.gpu)
+    implementation(libs.tensorflow.lite.task.vision)
 }

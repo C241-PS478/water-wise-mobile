@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomInputText">
+        <attr name="labelText" format="string" />
+        <attr name="exampleColor" format="color" />
+        <attr name="editTextHeight" format="dimension" />
+        <attr name="editTextUnit" format="string" />
+        <attr name="labelTextColor" format="color" />
+        <attr name="errorText" format="string" />
+    </declare-styleable>
+</resources>

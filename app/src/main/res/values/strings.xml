@@ -2,7 +2,7 @@
     <string name="app_name">Water Wise</string>
     <string name="page_title_news">Kabar Air Terkini</string>
     <string name="your_web_client_id">141611419842-c2f2jrsod68tbj5i7ih3ruc9b72ndiev.apps.googleusercontent.com</string>
-
+    <string name="close_btn">Close</string>
 
     <!--Navbar-->
     <string name="btnHome">Home</string>
@@ -23,9 +23,10 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_email">Must be fill by Email</string>
-    <string name="invalid_password">Password must in 8 characters or more</string>
-    <string name="prompt_username">Username</string>
-    <string name="prompt_name">Name</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+
+    <string name="prompt_first_name">First Name</string>
+    <string name="prompt_last_name">Last Name</string>
     <string name="btn_login">Login</string>
     <string name="btn_register">Register</string>
     <string name="btn_google">Continue with Google</string>
@@ -44,6 +45,11 @@
     <!--Main Page-->
     <string name="hello_user">Hello, App User !</string>
     <string name="location_user">Kab. Badung, Bali, Indonesia</string>
+    <string name="maps_on_main">Open Maps</string>
+    <string name="feature_on_main">Pendeteksi air AI</string>
+    <string name="button_detect_image">Deteksi gambar</string>
+    <string name="button_detect_data">Deteksi data</string>
+    <string name="news_on_main">Kabar air terkini</string>
 
     <!--Camera-->
     <string name="open_gallery">Open Gallery</string>
@@ -56,4 +62,14 @@
         Add description to explain the water source location and any related. Thank you for your contribution to helping others to get clean water source
     </string>
     <string name="water_safe_to_consume">This water is safe to consume</string>
+    <string name="water_not_safe_to_consume">This water is not safe to consume</string>
+    <string name="result_drinkable">Drinkable</string>
+    <string name="result_not_drinkable">Not Drinkable</string>
+    <string name="connect_with_iot">Connect with IoT</string>
+    <string name="identifikasi">Identifikasi</string>
+    <string name="result_drinkable_desc">This water is drinkable</string>
+    <string name="result_not_drinkable_desc">This water is not drinkable</string>
+
+    <!--Error Message-->
+    <string name="error_msg_permission_gps">Please enable GPS to use this feature</string>
 </resources>
