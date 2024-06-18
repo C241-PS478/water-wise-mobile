@@ -18,6 +18,7 @@ class WaterDetectionModel(val context: Context) {
         val image = normalizeImage(bitmap)
         val output = cleanWaterClassifierModel.process(image)
 
+        cleanWaterClassifierModel.close()
         return output.classificationAsTensorBuffer.floatArray
     }
 

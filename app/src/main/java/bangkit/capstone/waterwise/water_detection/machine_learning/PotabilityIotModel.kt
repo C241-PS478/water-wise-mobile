@@ -17,6 +17,7 @@ class PotabilityIotModel(val context: Context) {
 
         val output = potabilityIotModel.process(tabularData)
 
+        potabilityIotModel.close()
         Log.d("output", output.toString())
         return output.classificationAsTensorBuffer.floatArray
     }

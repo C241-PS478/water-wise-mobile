@@ -40,6 +40,7 @@
         android:paddingVertical="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
@@ -50,8 +51,8 @@
             android:text="@string/water_quality_title"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,12 +60,12 @@
             android:id="@+id/connect_iot_btn"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
+            android:background="@drawable/bg_primary_rounded"
             android:text="@string/connect_with_iot"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:background="@drawable/bg_primary_rounded"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_iot"
             app:iconGravity="textEnd"
@@ -76,22 +77,22 @@
             android:id="@+id/send_review_btn_result"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
+            android:background="@drawable/bg_primary_rounded"
             android:text="Send your review"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:background="@drawable/bg_primary_rounded"
+            android:visibility="gone"
             app:backgroundTint="@null"
             app:icon="@drawable/map_with_pin"
-            app:iconSize="15dp"
             app:iconGravity="textEnd"
-            android:visibility="gone"
+            app:iconSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
-            android:id="@+id/customInputText"
+            android:id="@+id/input_text_kepadatan"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -103,7 +104,7 @@
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
-            android:id="@+id/customInputText2"
+            android:id="@+id/input_text_klorin"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             app:editTextHeight="50dp"
@@ -111,10 +112,10 @@
             app:labelText="Klorin"
             app:labelTextColor="@color/grey"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customInputText" />
+            app:layout_constraintTop_toBottomOf="@+id/input_text_kepadatan" />
 
         <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
-            android:id="@+id/customInputText4"
+            android:id="@+id/input_text_kekerasan"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             app:editTextHeight="50dp"
@@ -122,10 +123,10 @@
             app:labelText="Kekerasan"
             app:labelTextColor="@color/grey"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customInputText2" />
+            app:layout_constraintTop_toBottomOf="@+id/input_text_klorin" />
 
         <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
-            android:id="@+id/customInputText5"
+            android:id="@+id/input_text_karbon"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             app:editTextHeight="50dp"
@@ -133,10 +134,10 @@
             app:labelText="Karbon"
             app:labelTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/customInputText" />
+            app:layout_constraintTop_toTopOf="@+id/input_text_kepadatan" />
 
         <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
-            android:id="@+id/customInputText3"
+            android:id="@+id/input_text_sulfat"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             app:editTextHeight="50dp"
@@ -144,9 +145,10 @@
             app:labelText="Sulfat"
             app:labelTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customInputText5" />
+            app:layout_constraintTop_toBottomOf="@+id/input_text_karbon" />
 
         <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
+            android:id="@+id/input_text_keasaman"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             app:editTextHeight="50dp"
@@ -154,7 +156,7 @@
             app:labelText="Keasaman"
             app:labelTextColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customInputText3" />
+            app:layout_constraintTop_toBottomOf="@+id/input_text_sulfat" />
 
         <Button
             android:id="@+id/identify_btn"
@@ -171,14 +173,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customInputText4" />
+            app:layout_constraintTop_toBottomOf="@+id/input_text_kekerasan"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="15dp"
             android:background="@drawable/success_badge"
             android:fontFamily="@font/poppins_bold"
             android:paddingHorizontal="26dp"
@@ -188,11 +189,41 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/cleanliness_label"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customInputText4"
+            app:layout_constraintStart_toStartOf="@+id/input_text_keasaman"
+            app:layout_constraintTop_toTopOf="@+id/cleanliness_percentage_result"
             tools:text="Drinkable"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/cleanliness_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cleanliness"
+            android:textColor="#7A7A7A"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/input_text_kekerasan"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/cleanliness_percentage_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/cleanliness_label"
+            app:layout_constraintEnd_toEndOf="@+id/cleanliness_label"
+            app:layout_constraintHorizontal_bias="0.394"
+            app:layout_constraintStart_toStartOf="@+id/cleanliness_label"
+            app:layout_constraintTop_toBottomOf="@+id/input_text_kekerasan"
+            tools:text="70%"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
