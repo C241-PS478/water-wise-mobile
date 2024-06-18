@@ -37,7 +37,7 @@ class DetectWaterViewModel: ViewModel() {
         // classify the image
         try {
             val result = waterDetectionModel.classify(bitmap)
-            val roundedResult = Helper.roundUp(result[0])
+            val roundedResult = Helper.formatToDecimal(result[0])
             _isSuccess.value = true
             _cleanlinessPercentage.value = roundedResult.toFloat()
 
@@ -55,7 +55,7 @@ class DetectWaterViewModel: ViewModel() {
         // classify
         try {
             val result = potabilityIotModel.classify(data)
-            val roundedResult = Helper.roundUp(result[0])
+            val roundedResult = Helper.formatToDecimal(result[0])
             _isSuccess.value = true
             _cleanlinessPercentage.value = roundedResult.toFloat()
 

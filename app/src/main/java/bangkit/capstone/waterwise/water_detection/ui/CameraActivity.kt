@@ -1,12 +1,11 @@
 package bangkit.capstone.waterwise.water_detection.ui
 
-import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
@@ -19,9 +18,6 @@ import androidx.lifecycle.MutableLiveData
 import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.databinding.ActivityCameraBinding
 import bangkit.capstone.waterwise.utils.Helper
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @Suppress("DEPRECATION")
 class CameraActivity : AppCompatActivity() {
@@ -29,7 +25,6 @@ class CameraActivity : AppCompatActivity() {
 
     private var imageCapture: ImageCapture? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-    private lateinit var openGalleryLauncher: ActivityResultLauncher<Intent>
     private var isFlashOn = MutableLiveData<Boolean>(false)
     private var isLoading = MutableLiveData<Boolean>(false)
 
@@ -52,6 +47,10 @@ class CameraActivity : AppCompatActivity() {
 
             btnFlash.setOnClickListener {
                 isFlashOn.value = !isFlashOn.value!!
+            }
+
+            openGalleryBtn.setOnClickListener {
+                openGallery()
             }
         }
 
@@ -107,7 +106,7 @@ class CameraActivity : AppCompatActivity() {
     private fun takePhoto() {
         isLoading.value = true
         val imageCapture = imageCapture ?: return
-        val tempFile = createCustomTempFile(application)
+        val tempFile = Helper.createCustomTempFile(application, ".jpg")
         val outputOptions = ImageCapture.OutputFileOptions.Builder(tempFile).build()
 
         imageCapture.takePicture(
@@ -133,18 +132,28 @@ class CameraActivity : AppCompatActivity() {
         )
     }
 
-    private val timeStamp: String = SimpleDateFormat(
-        FILENAME_FORMAT,
-        Locale.US
-    ).format(System.currentTimeMillis())
+    private val launcherIntentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val selectedImg: Uri = result.data?.data as Uri
+            val myFile = Helper.uriToFile(selectedImg, this@CameraActivity, ".jpg")
 
-    private fun createCustomTempFile(context: Context): File {
-        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(timeStamp, ".jpg", storageDir)
+            val intent = Intent(this@CameraActivity, DetectResultActivity::class.java)
+            intent.putExtra(DetectResultActivity.PHOTO_RESULT, myFile)
+            intent.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
+
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        launcherIntentGallery.launch(Intent.createChooser(intent, "Select an image"))
     }
 
     companion object {
-        const val FILENAME_FORMAT = "MMddyyyy"
         const val TAG = "CameraActivity"
     }
 }
