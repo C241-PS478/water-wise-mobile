@@ -21,9 +21,7 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityIntroBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+        setContentView(R.layout.activity_intro)
 
         introItems = listOf(
             IntroItem(R.drawable.intro_illustration_1, "Welcome to WaterWise!", "Experience the power of technology in ensuring clean water. WaterWise helps you detect water clarity and share your findings with others. Join a global community committed to clean water."),
