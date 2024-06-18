@@ -1,6 +1,7 @@
 package bangkit.capstone.waterwise.utils
 
 import android.app.Dialog
+import android.content.ContentResolver
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -8,6 +9,8 @@ import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
+import android.net.Uri
+import android.os.Environment
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
@@ -17,12 +20,14 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.exifinterface.media.ExifInterface
 import bangkit.capstone.waterwise.R
 import java.io.File
-import java.math.RoundingMode
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.DecimalFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
+import java.text.ParseException
+import java.util.Date
 import java.util.TimeZone
 
 object Helper {
@@ -96,9 +101,9 @@ object Helper {
         }
     }
 
-    fun roundUp(number: Number): Number {
+    fun formatToDecimal(number: Number): Number {
         val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
+//        df.roundingMode = RoundingMode.CEILING
         return df.format(number).toFloat()
     }
 
@@ -109,7 +114,32 @@ object Helper {
         return isEnabled
     }
 
-    private const val TIME_STAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    private const val TIME_STAMP_FORMAT = "MMddyyyy"
+    private val timeStamp: String = SimpleDateFormat(
+        TIME_STAMP_FORMAT,
+        Locale.US
+    ).format(System.currentTimeMillis())
+
+    fun createCustomTempFile(context: Context, ext: String): File {
+        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(timeStamp, ext, storageDir)
+    }
+
+    fun uriToFile(selectedImg: Uri, context: Context, ext: String): File {
+        val contentResolver: ContentResolver = context.contentResolver
+        val myFile = createCustomTempFile(context, ext)
+
+        val inputStream = contentResolver.openInputStream(selectedImg) as InputStream
+        val outputStream: OutputStream = FileOutputStream(myFile)
+        val buf = ByteArray(1024)
+        var len: Int
+        while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+        outputStream.close()
+        inputStream.close()
+
+        return myFile
+    }
+
     private const val SIMPLE_DATE_FORMAT = "dd MMM yyyy HH.mm"
     private val simpleDate = SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.getDefault())
 

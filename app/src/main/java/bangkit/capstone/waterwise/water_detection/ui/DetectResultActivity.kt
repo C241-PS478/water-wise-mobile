@@ -71,6 +71,9 @@ class DetectResultActivity : AppCompatActivity() {
             btnBack.setOnClickListener {
                 finish()
             }
+            predictionMethodTitle.setOnClickListener{
+                startActivity(Intent(this@DetectResultActivity, DetectByDataActivity::class.java))
+            }
         }
 
         // handle result from camera activity
@@ -97,7 +100,7 @@ class DetectResultActivity : AppCompatActivity() {
             }
 
             cleanlinessPercentage.observe(this@DetectResultActivity) {
-                setCleanlinessPercentage(it)
+                setCleanlinessPercentage(it * 100)
             }
 
             isSendReviewSuccess.observe(this@DetectResultActivity) {
