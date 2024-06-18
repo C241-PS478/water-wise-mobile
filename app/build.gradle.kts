@@ -25,8 +25,10 @@ android {
         val properties = Properties()
         properties.load(localProperties.inputStream())
         val newsApiKey = properties.getProperty("news.api.key")
+        val baseUrl = properties.getProperty("base.url")
 
         buildConfigField("String", "NEWS_API_KEY", "\"$newsApiKey\"")
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
     }
 
     buildTypes {
@@ -49,7 +51,6 @@ android {
         viewBinding = true
         buildConfig = true
         mlModelBinding = true
-        buildConfig = true
     }
 }
 
@@ -67,6 +68,7 @@ dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.play.services.maps)
     implementation(libs.firebase.auth)
+    implementation(libs.androidx.room.common)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

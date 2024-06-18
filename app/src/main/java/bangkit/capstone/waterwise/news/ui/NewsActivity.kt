@@ -11,7 +11,7 @@ import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.databinding.ActivityNewsBinding
 import bangkit.capstone.waterwise.news.NewsAdapter
 import bangkit.capstone.waterwise.news.NewsViewModel
-import bangkit.capstone.waterwise.ui.MainActivity
+import bangkit.capstone.waterwise.ui.main.MainActivity
 import bangkit.capstone.waterwise.utils.Helper
 import bangkit.capstone.waterwise.water_detection.ui.CameraActivity
 

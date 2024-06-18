@@ -33,7 +33,7 @@
     <string name="text_OR">OR</string>
 
     <!--Main Page-->
-    <string name="hello_user">Hello, App User !</string>
+    <string name="hello_user">Hello, %s !</string>
     <string name="location_user">Kab. Badung, Bali, Indonesia</string>
     <string name="maps_on_main">Open Maps</string>
     <string name="feature_on_main">Pendeteksi air AI</string>
@@ -62,4 +62,7 @@
 
     <!--Error Message-->
     <string name="error_msg_permission_gps">Please enable GPS to use this feature</string>
+    <string name="success_alert">Success!</string>
+    <string name="error_alert">Error shown!</string>
+    <string name="title_activity_maps2">MapsActivity2</string>
 </resources>
