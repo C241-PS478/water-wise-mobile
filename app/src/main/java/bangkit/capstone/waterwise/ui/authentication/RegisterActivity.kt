@@ -1,4 +1,5 @@
-// RegisterActivity.kt
+package bangkit.capstone.waterwise.ui.authentication
+
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -55,6 +56,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.registerButton.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
+        binding.registerButton.setOnClickListener {
             showLoading(true)
             val name = binding.nameEditText.text.toString()
             val email = binding.emailEditText.text.toString()
@@ -79,40 +84,47 @@ class RegisterActivity : AppCompatActivity() {
                         try {
                             val response = viewModel.register(name, email, password)
                             showLoading(false)
-                            showToast(response.message)
-
-                            val customLayout = LayoutInflater.from(this@RegisterActivity)
-                                .inflate(R.layout.custom_dialog_layout, null)
-                            val animationView =
-                                customLayout.findViewById<LottieAnimationView>(R.id.animationView)
-                            animationView.setAnimation("confirm.json")
-                            animationView.playAnimation()
-
-                            AlertDialog.Builder(this@RegisterActivity).apply {
-                                setTitle("Good News!")
-                                setMessage(getString(R.string.success_registration))
-                                setView(customLayout)
-                                setPositiveButton(getString(R.string.next)) { _, _ ->
-                                    val intent = Intent(context, LoginActivity::class.java)
-                                    intent.flags =
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                    startActivity(intent)
-                                    finish()
-                                }
-                                create()
-                                show()
-                            }
+                            handleRegistrationResponse(response)
                         } catch (e: HttpException) {
                             showLoading(false)
                             val errorBody = e.response()?.errorBody()?.string()
-                            val errorResponse =
-                                Gson().fromJson(errorBody, RegisterResponse::class.java)
+                            val errorResponse = Gson().fromJson(errorBody, RegisterResponse::class.java)
                             showToast(errorResponse.message)
                         }
-
                     }
                 }
             }
+        }
+    }
+
+    private fun handleRegistrationResponse(response: RegisterResponse) {
+        if (!response.error) {
+            showSuccessDialog()
+        } else {
+            showToast(response.message)
+        }
+    }
+
+    private fun showSuccessDialog() {
+        val customLayout = LayoutInflater.from(this@RegisterActivity)
+            .inflate(R.layout.custom_dialog_layout, null)
+        val animationView =
+            customLayout.findViewById<LottieAnimationView>(R.id.animationView)
+        animationView.setAnimation("confirm.json")
+        animationView.playAnimation()
+
+        AlertDialog.Builder(this@RegisterActivity).apply {
+            setTitle("Good News!")
+            setMessage(getString(R.string.success_registration))
+            setView(customLayout)
+            setPositiveButton(getString(R.string.next)) { _, _ ->
+                startActivity(Intent(context, LoginActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                })
+                finish()
+            }
+            create()
+            show()
         }
     }
 

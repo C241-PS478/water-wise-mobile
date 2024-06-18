@@ -31,5 +31,4 @@ interface ApiService {
         @Field("firebaseId") firebaseId: String,
         @Field("email") email: String
     ): LoginResponse
-
 }

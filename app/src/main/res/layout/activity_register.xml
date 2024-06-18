@@ -47,7 +47,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="@string/prompt_name"
+        android:text="@string/prompt_first_name"
         android:textColor="?attr/textFillColor"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -187,7 +187,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerButton"
         app:layout_constraintBottom_toTopOf="@id/googleButton" />
 
-    <com.google.android.gms.common.SignInButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/googleButton"
         android:layout_width="0dp"
         android:layout_height="56dp"

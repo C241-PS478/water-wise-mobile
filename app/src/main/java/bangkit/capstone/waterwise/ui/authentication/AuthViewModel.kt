@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bangkit.capstone.waterwise.data.datastore.repository.UserRepository
-import bangkit.capstone.waterwise.data.datastore.model.UserModel
 import bangkit.capstone.waterwise.data.remote.response.LoginResponse
 import bangkit.capstone.waterwise.result.Result
 import kotlinx.coroutines.launch
 
 class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    val loginResult: LiveData<Result<LoginResponse>> get() = userRepository.loginResult
+    val loginResult: LiveData<Result<LoginResponse>> = userRepository.loginResult
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
@@ -19,28 +18,11 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    fun loginWithGoogle(userModel: UserModel) {
+    fun loginWithGoogle(firebaseId: String, email: String) {
         viewModelScope.launch {
-            userRepository.saveSession(userModel)
-            userRepository.loginWithGoogle(userModel.firebaseId ?: "", userModel.email)
+            userRepository.loginWithGoogle(firebaseId, email)
         }
     }
-
-
 
     suspend fun register(name: String, email: String, password: String) = userRepository.register(name, email, password)
-
-    fun saveSession(user: UserModel) {
-        viewModelScope.launch {
-            userRepository.saveSession(user)
-        }
-    }
-
-    fun getSession() = userRepository.getSession()
-
-    fun logout() {
-        viewModelScope.launch {
-            userRepository.logout()
-        }
-    }
 }

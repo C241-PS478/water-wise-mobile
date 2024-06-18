@@ -1,11 +1,11 @@
 package bangkit.capstone.waterwise.data.datastore.model
 
 data class UserModel(
-    val userId: String,
+    val id: String,
     val firebaseId: String?,
+    val username: String,
     val email: String,
     val name: String,
-    val phoneNumber: String?,
-    val address: String?,
-    val token: String
+    val isAdmin: Boolean,
+    val phoneNumber: String
 )

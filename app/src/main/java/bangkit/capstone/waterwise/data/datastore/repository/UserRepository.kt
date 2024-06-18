@@ -46,17 +46,16 @@ class UserRepository private constructor(
             if (!response.error) {
                 _loginResult.postValue(Result.Success(response))
             } else {
-                _loginResult.postValue(Result.Error("Login with Google failed: ${response.message}"))
+                _loginResult.postValue(Result.Error("Login failed: ${response.message}"))
             }
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
-            _loginResult.postValue(Result.Error("Login with Google failed: ${errorResponse.message}"))
+            _loginResult.postValue(Result.Error("Login failed: ${errorResponse.message}"))
         } catch (e: Exception) {
             _loginResult.postValue(Result.Error("An unexpected error occurred: ${e.message}"))
         }
     }
-
 
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
