@@ -1,11 +1,10 @@
 package bangkit.capstone.waterwise.ui.authentication
 
-import RegisterActivity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -19,6 +18,7 @@ import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.databinding.ActivityLoginBinding
 import bangkit.capstone.waterwise.result.Result
 import bangkit.capstone.waterwise.ui.main.MainActivity
+import bangkit.capstone.waterwise.utils.CustomToast
 import bangkit.capstone.waterwise.utils.ViewModelFactory
 import bangkit.capstone.waterwise.water_detection.ui.CameraActivity.Companion.TAG
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
@@ -31,18 +31,22 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: AuthViewModel
     private lateinit var auth: FirebaseAuth
+    private lateinit var customToast : CustomToast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        customToast = CustomToast(this)
         auth = Firebase.auth
 
         binding.googleSignInButton.setOnClickListener {
@@ -128,14 +132,30 @@ class LoginActivity : AppCompatActivity() {
                 is Result.Loading -> showLoading(true)
                 is Result.Success -> {
                     showLoading(false)
-                    showToast(result.data.message)
+                    MotionToast.createColorToast(
+                        this@LoginActivity,
+                        title = "Success",
+                        message = result.data.message,
+                        style = MotionToastStyle.SUCCESS,
+                        position = Gravity.BOTTOM,
+                        duration = MotionToast.LONG_DURATION,
+                        null
+                    )
                     // Navigate to MainActivity
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
                 is Result.Error -> {
                     showLoading(false)
-                    showToast(result.error)
+                    MotionToast.createColorToast(
+                        this@LoginActivity,
+                        title = "Error found",
+                        message = result.error,
+                        style = MotionToastStyle.ERROR,
+                        position = Gravity.BOTTOM,
+                        duration = MotionToast.LONG_DURATION,
+                        null
+                    )
                 }
             }
         })
@@ -160,9 +180,5 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

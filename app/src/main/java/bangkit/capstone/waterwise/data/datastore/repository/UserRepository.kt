@@ -19,7 +19,7 @@ class UserRepository private constructor(
     private val _loginResult = MutableLiveData<Result<LoginResponse>>()
     val loginResult: LiveData<Result<LoginResponse>> = _loginResult
 
-    suspend fun register(name: String, email: String, password: String) = apiService.register(name, email, password)
+    suspend fun register(name: String, phoneNumber: String, email: String, password: String) = apiService.register(name, phoneNumber, email, password)
 
     suspend fun login(email: String, password: String) {
         _loginResult.postValue(Result.Loading)

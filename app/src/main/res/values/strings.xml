@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Water Wise</string>
-    <string name="page_title_news">Kabar Air Terkini</string>
+    <string name="page_title_news">Latest Water News</string>
     <string name="your_web_client_id">141611419842-c2f2jrsod68tbj5i7ih3ruc9b72ndiev.apps.googleusercontent.com</string>
     <string name="close_btn">Close</string>
 
@@ -16,40 +16,44 @@
     <string name="title_intro">Title Intro</string>
     <string name="desc_intro">Description Intro</string>
     <string name="image_intro">Image Intro</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login Activity</string>
+    <string name="prompt_phone">Phone Number</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="ishave_account">Already have an account?</string>
     <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_email">Must be fill by Email</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="action_sign_in_short">Sign In</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_email">Email cannot be empty</string>
+    <string name="invalid_password">Password must be more than 5 characters</string>
+    <string name="invalid_phone">Please enter a valid phone number</string>
 
-    <string name="prompt_first_name">First Name</string>
+    <string name="prompt_name">Name</string>
     <string name="prompt_last_name">Last Name</string>
     <string name="btn_login">Login</string>
     <string name="btn_register">Register</string>
     <string name="btn_google">Continue with Google</string>
-    <string name="text_OR">OR</string>
-    <string name="null_column">Fill in All Fields First</string>
-    <string name="null_name">Fill the name box</string>
-    <string name="null_email">Fill in the Email and Password first</string>
-    <string name="null_password">Fill the Password</string>
-    <string name="success_registration">Successful Registration! Your account has been successfully created.</string>
-    <string name="email_not_registered">Email not Registered</string>
-    <string name="wrong_password">Password that you enter is not correct</string>
-    <string name="login_success">Login Success!</string>
-    <string name="login_failed">Login Failed, Try Again!</string>
+    <string name="text_OR">Or</string>
+    <string name="null_column">Please fill in all fields</string>
+    <string name="null_name">Please fill in the name field</string>
+    <string name="null_phone">Please fill in the phone number field</string>
+    <string name="null_email">Please fill in the email field</string>
+    <string name="null_password">Please fill in the password field</string>
+    <string name="success_registration">Registration successful! Your account has been created.</string>
+    <string name="email_not_registered">Email not registered</string>
+    <string name="wrong_password">The password entered is incorrect</string>
+    <string name="login_success">Login successful!</string>
+    <string name="login_failed">Login failed, please try again</string>
     <string name="next">Next</string>
 
     <!--Main Page-->
-    <string name="hello_user">Hello, App User !</string>
-    <string name="location_user">Kab. Badung, Bali, Indonesia</string>
+    <string name="hello_user">Hello, App User!</string>
+    <string name="location_user">Badung Regency, Bali, Indonesia</string>
     <string name="maps_on_main">Open Maps</string>
-    <string name="feature_on_main">Pendeteksi air AI</string>
-    <string name="button_detect_image">Deteksi gambar</string>
-    <string name="button_detect_data">Deteksi data</string>
-    <string name="news_on_main">Kabar air terkini</string>
+    <string name="feature_on_main">AI Water Detector</string>
+    <string name="button_detect_image">Detect Image</string>
+    <string name="button_detect_data">Detect Data</string>
+    <string name="news_on_main">Latest Water News</string>
 
     <!--Camera-->
     <string name="open_gallery">Open Gallery</string>
@@ -59,14 +63,14 @@
     <string name="water_quality_title">Water Quality</string>
     <string name="drinkAbility_label">Drinkability</string>
     <string name="result_desc">
-        Add description to explain the water source location and any related. Thank you for your contribution to helping others to get clean water source
+        Add description to explain the water source location and any related information. Thank you for your contribution to helping others find clean water sources.
     </string>
     <string name="water_safe_to_consume">This water is safe to consume</string>
     <string name="water_not_safe_to_consume">This water is not safe to consume</string>
     <string name="result_drinkable">Drinkable</string>
     <string name="result_not_drinkable">Not Drinkable</string>
     <string name="connect_with_iot">Connect with IoT</string>
-    <string name="identifikasi">Identifikasi</string>
+    <string name="identifikasi">Identify</string>
     <string name="result_drinkable_desc">This water is drinkable</string>
     <string name="result_not_drinkable_desc">This water is not drinkable</string>
 

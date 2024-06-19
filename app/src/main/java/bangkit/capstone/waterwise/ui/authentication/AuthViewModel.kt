@@ -24,5 +24,10 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    suspend fun register(name: String, email: String, password: String) = userRepository.register(name, email, password)
+    suspend fun register(
+        name: String,
+        phoneNumber: String,
+        email: String,
+        password: String
+    ) = userRepository.register(name, phoneNumber, email, password)
 }

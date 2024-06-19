@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Text appearance-->
+    <style name="header_24">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+    <style name="subheader16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">?attr/textFillColor</item>
+    </style>
+    <style name="blue_subheader16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+    <style name="regular12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
+    <!--Box appearance-->
     <style name="rounded_full">
         <item name="cornerSize">50%</item>
     </style>

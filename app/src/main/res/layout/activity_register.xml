@@ -31,10 +31,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="@string/app_name"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="24sp"
+        android:textAppearance="@style/header_24"
         android:textAlignment="center"
-        android:fontFamily="@font/poppins_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,10 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="@string/prompt_first_name"
-        android:textColor="?attr/textFillColor"
-        android:textSize="16sp"
+        android:text="@string/prompt_name"
+        android:textAppearance="@style/subheader16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -83,10 +79,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="@string/prompt_email"
-        android:textColor="?attr/textFillColor"
-        android:textSize="16sp"
+        android:text="@string/prompt_phone"
+        android:textAppearance="@style/subheader16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameETLayout" />
 
@@ -103,8 +97,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailTextView">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <bangkit.capstone.waterwise.custom.CustomEmailReq
             android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:fontFamily="@font/poppins_medium"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/phoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/prompt_email"
+        android:textAppearance="@style/subheader16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailETLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phoneETLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneTextView">
+
+        <bangkit.capstone.waterwise.custom.CustomEmailReq
+            android:id="@+id/phoneEditText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:fontFamily="@font/poppins_medium"
@@ -125,7 +152,7 @@
         android:textColor="?attr/textFillColor"
         android:fontFamily="@font/poppins_medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailETLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneETLayout" />
 
     <!-- TextInputLayout untuk Password -->
     <com.google.android.material.textfield.TextInputLayout
@@ -141,7 +168,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView" >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <bangkit.capstone.waterwise.custom.CustomPasswordReq
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -168,47 +195,35 @@
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"
-        app:layout_constraintBottom_toTopOf="@+id/textOr" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"/>
 
-    <!-- Text OR -->
     <TextView
-        android:id="@+id/textOr"
+        android:id="@+id/ishave_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/text_OR"
-        android:textAlignment="center"
-        android:textColor="?attr/colorPrimary"
-        android:fontFamily="@font/poppins_semibold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/ishave_account"
+        android:textAppearance="@style/subheader16"
+        app:layout_constraintEnd_toStartOf="@+id/login_click"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerButton"
-        app:layout_constraintBottom_toTopOf="@id/googleButton" />
+        tools:ignore="TextContrastCheck" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/googleButton"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/button_google_rounded"
-        android:backgroundTint="@color/white"
-        android:text="@string/btn_google"
-        android:textSize="14sp"
-        android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        app:backgroundTint="@null"
-        app:icon="@drawable/ic_google"
-        app:iconTint="@null"
-        app:iconSize="32dp"
-        app:iconGravity="textStart"
+    <TextView
+        android:id="@+id/login_click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/btn_login"
+        android:textAppearance="@style/blue_subheader16"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.730"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textOr" />
+        app:layout_constraintTop_toBottomOf="@+id/registerButton"
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     <!-- Guideline untuk penyesuaian layout -->
     <androidx.constraintlayout.widget.Guideline

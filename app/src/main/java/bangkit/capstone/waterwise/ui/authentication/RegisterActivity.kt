@@ -1,13 +1,14 @@
 package bangkit.capstone.waterwise.ui.authentication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,13 +16,13 @@ import androidx.lifecycle.lifecycleScope
 import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.data.remote.response.RegisterResponse
 import bangkit.capstone.waterwise.databinding.ActivityRegisterBinding
-import bangkit.capstone.waterwise.ui.authentication.AuthViewModel
-import bangkit.capstone.waterwise.ui.authentication.LoginActivity
 import bangkit.capstone.waterwise.utils.ViewModelFactory
 import com.airbnb.lottie.LottieAnimationView
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -39,6 +40,8 @@ class RegisterActivity : AppCompatActivity() {
 
         setupView()
         setupAction()
+
+        binding.loginClick
     }
 
     private fun setupView() {
@@ -62,6 +65,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             showLoading(true)
             val name = binding.nameEditText.text.toString()
+            val phoneNumber = binding.phoneEditText.text.toString()
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
 
@@ -69,6 +73,10 @@ class RegisterActivity : AppCompatActivity() {
                 name.isEmpty() -> {
                     showLoading(false)
                     binding.nameETLayout.error = getString(R.string.null_name)
+                }
+                phoneNumber.isEmpty() -> {
+                    showLoading(false)
+                    binding.emailETLayout.error = getString(R.string.null_phone)
                 }
                 email.isEmpty() -> {
                     showLoading(false)
@@ -82,14 +90,22 @@ class RegisterActivity : AppCompatActivity() {
                     showLoading(true)
                     lifecycleScope.launch {
                         try {
-                            val response = viewModel.register(name, email, password)
+                            val response = viewModel.register(name, phoneNumber, email, password)
                             showLoading(false)
                             handleRegistrationResponse(response)
                         } catch (e: HttpException) {
                             showLoading(false)
                             val errorBody = e.response()?.errorBody()?.string()
                             val errorResponse = Gson().fromJson(errorBody, RegisterResponse::class.java)
-                            showToast(errorResponse.message)
+                            MotionToast.createColorToast(
+                                this@RegisterActivity,
+                                title = "Error Response",
+                                message = errorResponse.message,
+                                style = MotionToastStyle.ERROR,
+                                position = Gravity.BOTTOM,
+                                duration = MotionToast.LONG_DURATION,
+                                null
+                            )
                         }
                     }
                 }
@@ -101,10 +117,19 @@ class RegisterActivity : AppCompatActivity() {
         if (!response.error) {
             showSuccessDialog()
         } else {
-            showToast(response.message)
+            MotionToast.createColorToast(
+                this@RegisterActivity,
+                title = "Information",
+                message = response.message,
+                style = MotionToastStyle.INFO,
+                position = Gravity.BOTTOM,
+                duration = MotionToast.LONG_DURATION,
+                null
+            )
         }
     }
 
+    @SuppressLint("InflateParams")
     private fun showSuccessDialog() {
         val customLayout = LayoutInflater.from(this@RegisterActivity)
             .inflate(R.layout.custom_dialog_layout, null)
@@ -114,7 +139,7 @@ class RegisterActivity : AppCompatActivity() {
         animationView.playAnimation()
 
         AlertDialog.Builder(this@RegisterActivity).apply {
-            setTitle("Good News!")
+            setTitle("Success!")
             setMessage(getString(R.string.success_registration))
             setView(customLayout)
             setPositiveButton(getString(R.string.next)) { _, _ ->
@@ -131,9 +156,5 @@ class RegisterActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.isEnabled = !isLoading
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
