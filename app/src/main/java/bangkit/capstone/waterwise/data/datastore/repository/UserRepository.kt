@@ -2,6 +2,7 @@ package bangkit.capstone.waterwise.data.datastore.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import bangkit.capstone.waterwise.data.remote.api.ApiService
 import bangkit.capstone.waterwise.data.datastore.model.UserModel
 import bangkit.capstone.waterwise.data.datastore.pref.UserPreference
@@ -80,6 +81,9 @@ class UserRepository private constructor(
                 INSTANCE = instance
                 instance
             }
+        }
+        fun clearInstance() {
+            INSTANCE = null
         }
     }
 }

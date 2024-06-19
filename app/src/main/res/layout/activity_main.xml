@@ -20,16 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/photo_acc"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginStart="24dp"
-            android:src="@drawable/example_photo_acc"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
         <LinearLayout
             android:id="@+id/text_layout"
             android:layout_width="wrap_content"
@@ -37,10 +27,10 @@
             android:orientation="vertical"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintStart_toEndOf="@id/photo_acc"
-            app:layout_constraintTop_toTopOf="@id/photo_acc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="@id/btn_notification"
-            app:layout_constraintBottom_toBottomOf="@id/photo_acc">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/title_hello"
@@ -145,9 +135,10 @@
         app:iconGravity="textStart"
         android:textAllCaps="false"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/title_feature_on_main"
+        app:layout_constraintEnd_toStartOf="@id/btn_detect_data"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <com.google.android.material.button.MaterialButton
@@ -166,7 +157,7 @@
         app:iconSize="24dp"
         app:iconGravity="textStart"
         android:textAllCaps="false"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/title_feature_on_main"
@@ -189,16 +180,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
-        android:scrollbars="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_marginTop="16dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_news_on_main"
-        tools:listitem="@layout/news_item_horizontal"
-        app:layout_constraintVertical_bias="0.045"
-        app:layoutManagerOrientation="horizontal" />
+        tools:listitem="@layout/news_item_horizontal" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressBar"
@@ -212,16 +200,21 @@
         app:lottie_fileName="loadingWater.json"
         app:lottie_loop="true" />
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:backgroundTint="@color/pearlBlue"
             app:fabCradleMargin="20dp"
+            app:fabCradleRoundedCornerRadius="20dp"
             app:fabCradleVerticalOffset="10dp"
             tools:ignore="VisualLintBottomAppBar">
 

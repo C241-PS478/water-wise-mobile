@@ -1,21 +1,16 @@
 package bangkit.capstone.waterwise.ui.main
 
-import android.Manifest
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.databinding.ActivityMainBinding
-import bangkit.capstone.waterwise.utils.Helper
-import bangkit.capstone.waterwise.water_detection.ui.CameraActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -36,8 +31,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showRecyclerView() {
-            recyclerView = findViewById(R.id.news_recycler_view)
-            recyclerView.setHasFixedSize(true)
-            recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        recyclerView = binding.newsRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.isNestedScrollingEnabled = false
+        // Add adapter setup here if needed
     }
 }
