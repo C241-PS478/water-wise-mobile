@@ -2,25 +2,26 @@ package bangkit.capstone.waterwise.water_detection.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.widget.Button
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.databinding.ActivityDetectResultBinding
+import bangkit.capstone.waterwise.review.ReviewViewModel
+import bangkit.capstone.waterwise.review.types.ReviewFormDialogListener
+import bangkit.capstone.waterwise.utils.Const.ACCESS_TOKEN
 import bangkit.capstone.waterwise.utils.CustomToast
 import bangkit.capstone.waterwise.utils.Helper
 import bangkit.capstone.waterwise.water_detection.DetectWaterViewModel
@@ -33,21 +34,25 @@ import www.sanju.motiontoast.MotionToastStyle
 import java.io.File
 
 @Suppress("DEPRECATION")
-class DetectResultActivity : AppCompatActivity() {
+class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
     private lateinit var binding : ActivityDetectResultBinding
     private lateinit var customToast : CustomToast
 
     private val loadingDialog by lazy { Helper.loadingDialog(this) }
 
     private val detectWaterViewModel: DetectWaterViewModel by viewModels()
+    private val reviewViewModel: ReviewViewModel by viewModels()
 
-    private lateinit var cameraActivityResult: ActivityResultLauncher<Intent>
     private var photoResult: File? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var latitude: Double? = null
     private var longitude: Double? = null
 
     private lateinit var waterDetectionModel: WaterDetectionModel
+    private var token: String = "Bearer $ACCESS_TOKEN"
+    private var _rotatedBitmap: Bitmap? = null
+
+    private lateinit var formReviewDialog: ReviewFormDialog
 
     companion object  {
         const val PHOTO_RESULT = "PHOTO_RESULT"
@@ -59,20 +64,27 @@ class DetectResultActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
+        formReviewDialog = ReviewFormDialog(reviewViewModel, detectWaterViewModel)
+
+        token = "Bearer $ACCESS_TOKEN"
+
+        val context = this
         customToast = CustomToast(this)
         waterDetectionModel = WaterDetectionModel(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         with(binding){
             sendReviewBtnResult.setOnClickListener {
-                showSendReviewFormDialog(this@DetectResultActivity)
+                showSendReviewFormDialog()
             }
-
+            btnTryAgain.setOnClickListener {
+                detectWaterViewModel.detectWaterUsingModel(_rotatedBitmap!!, waterDetectionModel)
+            }
             btnBack.setOnClickListener {
                 finish()
             }
             predictionMethodTitle.setOnClickListener{
-                startActivity(Intent(this@DetectResultActivity, DetectByDataActivity::class.java))
+                startActivity(Intent(context, DetectByDataActivity::class.java))
             }
         }
 
@@ -81,12 +93,70 @@ class DetectResultActivity : AppCompatActivity() {
         val bitmap = BitmapFactory.decodeFile(photoResult?.absolutePath)
         val orientation = Helper.getImageOrientation(photoResult!!)
         val rotatedBitmap = Helper.rotateBitmap(bitmap, orientation)
+        _rotatedBitmap = rotatedBitmap
         binding.waterSourceImg.setImageBitmap(rotatedBitmap)
 
-        detectWaterViewModel.detectWaterUsingModel(rotatedBitmap, waterDetectionModel)
+        if (Helper.isHasInternetConnection(this)) {
+            val imgFile = Helper.bitmapToImage(rotatedBitmap, this)
+            detectWaterViewModel.predictQuality(this, token, imgFile)
+        } else {
+            detectWaterViewModel.detectWaterUsingModel(rotatedBitmap, waterDetectionModel)
+        }
+
+        //TO DO
+        // get token from shared preferences
+        onTokenRetrieved(token)
 
         detectWaterViewModel.apply {
-            isLoading.observe(this@DetectResultActivity) {
+            isLoading.observe(context) {
+                if (it) {
+                    binding.loaderContainer.visibility = VISIBLE
+                } else {
+                    binding.loaderContainer.visibility = GONE
+                    binding.sendReviewSuccessMessage.visibility = GONE
+                    loadingDialog.dismiss()
+                }
+            }
+
+            isDrinkable.observe(context) {
+                setBadgeForResult(it)
+                setResultDescription(it)
+            }
+
+            cleanlinessPercentage.observe(context) {
+                setCleanlinessPercentage(it * 100)
+            }
+
+            predictionResponse.observe(context) {
+                onPredictionIdRetrieved(it.id)
+            }
+
+            isSuccess.observe(context) {
+                if (it) {
+                    binding.errorMessageContainer.visibility = GONE
+                    binding.sendReviewBtnResult.visibility = VISIBLE
+                }
+            }
+
+            isPhotoInvalid.observe(context) {
+                if (it) {
+                    binding.errorMessageContainer.visibility = VISIBLE
+                    binding.sendReviewBtnResult.visibility = GONE
+
+                    Helper.infoDialog(context, "The water object is too small, please take another photo" ).show()
+                }
+            }
+
+            isError.observe(context) {
+                if (it) {
+                    binding.errorMessageContainer.visibility = VISIBLE
+                    binding.sendReviewBtnResult.visibility = GONE
+                }
+            }
+        }
+
+        reviewViewModel.apply {
+            isLoading.observe(context) {
                 if (it) {
                     loadingDialog.show()
                 } else {
@@ -94,24 +164,17 @@ class DetectResultActivity : AppCompatActivity() {
                 }
             }
 
-            isDrinkable.observe(this@DetectResultActivity) {
-                setBadgeForResult(it)
-                setResultDescription(it)
-            }
-
-            cleanlinessPercentage.observe(this@DetectResultActivity) {
-                setCleanlinessPercentage(it * 100)
-            }
-
-            isSendReviewSuccess.observe(this@DetectResultActivity) {
+            isSuccess.observe(context) {
                 if (it) {
                     binding.sendReviewBtnResult.isEnabled = false
                     binding.sendReviewBtnResult.isClickable = false
+                    binding.sendReviewBtnResult.visibility = GONE
+                    binding.sendReviewSuccessMessage.visibility = VISIBLE
 
                     MotionToast.createColorToast(
-                        this@DetectResultActivity,
+                        context,
                         title = "Success",
-                        message = "Review has been uploaded",
+                        message = "Review has been sent",
                         style = MotionToastStyle.SUCCESS,
                         position = Gravity.TOP,
                         duration = MotionToast.LONG_DURATION,
@@ -120,10 +183,10 @@ class DetectResultActivity : AppCompatActivity() {
                 }
             }
 
-            isError.observe(this@DetectResultActivity) {
+            isError.observe(context) {
                 if (it) {
                     MotionToast.createColorToast(
-                        this@DetectResultActivity,
+                        context,
                         title = "Error",
                         message = "Failed to send review",
                         style = MotionToastStyle.ERROR,
@@ -146,67 +209,58 @@ class DetectResultActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSendReviewFormDialog(
-        context: Context,
-    ) {
-        if (
+    private fun showSendReviewFormDialog() {
+        if(!Helper.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            return
+        }
+        else if (
             !Helper.isGPSEnabled(this) &&
             Helper.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            ) {
+        ) {
             Helper.infoDialog(
                 this,
                 "Your GPS is disabled, please enable it to use this feature"
             ).show()
             return
-        } else {
-            getMyCurrentLocation()
         }
+        getMyCurrentLocation()
 
-        val reviewDialog = Helper.dialogBuilder(context, R.layout.form_review_dialog, true)
-        val resultText = reviewDialog.findViewById<TextView>(R.id.detection_result)
-
-        detectWaterViewModel.isDrinkable.observe(this) {
-            setFormReviewDialogResult(it, resultText)
-        }
-
-        val submitBtn = reviewDialog.findViewById<Button>(R.id.send_review_btn)
-        submitBtn.setOnClickListener {
-            detectWaterViewModel.sendReview()
-            reviewDialog.dismiss()
-        }
-
-        reviewDialog.show()
+        val transaction = supportFragmentManager.beginTransaction()
+        formReviewDialog.show(transaction, "ReviewFormDialog")
     }
 
     private fun getMyCurrentLocation() {
+        reviewViewModel.setFetchingLocationState(true)
         if (ContextCompat.checkSelfPermission(
                 (this),
                 Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         ) {
             if(latitude == null && longitude == null){
-                detectWaterViewModel.setLoadingState(true)
                 fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, null).addOnSuccessListener { location ->
                     if (location != null) {
                         latitude = location.latitude
                         longitude = location.longitude
+
+                        onLocationRetrieved(location.latitude, location.longitude)
                         Log.d("FETCH_CURRENT_LOCATION", "$location")
                     }
-
-                    detectWaterViewModel.setLoadingState(false)
+                    reviewViewModel.setFetchingLocationState(false)
                 }.addOnFailureListener( this) { e ->
-                    detectWaterViewModel.setLoadingState(false)
+                    formReviewDialog.dismiss()
                     Helper.infoDialog(this, "Failed to get your location")
+                    reviewViewModel.setFetchingLocationState(false)
+
                     Log.e("LocationUpdate", "Failed to get location: ${e.message}")
                 }
+            } else{
+                reviewViewModel.setFetchingLocationState(false)
             }
         } else {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
-    }
 
-    private fun getFont(font: Int): Typeface?{
-        return ResourcesCompat.getFont(this, font)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -238,5 +292,20 @@ class DetectResultActivity : AppCompatActivity() {
             textView.text = getString(R.string.result_not_drinkable)
             textView.setTextColor(getColor(R.color.error_badge))
         }
+    }
+
+    override fun onTokenRetrieved(token: String) {
+        this.token = token
+        formReviewDialog.onTokenRetrieved(token)
+    }
+
+    override fun onLocationRetrieved(lat: Double, long: Double) {
+        this.latitude = lat
+        this.longitude = long
+        formReviewDialog.onLocationRetrieved(lat, long)
+    }
+
+    override fun onPredictionIdRetrieved(id: String) {
+        formReviewDialog.onPredictionIdRetrieved(id)
     }
 }

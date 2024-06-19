@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Environment
 import android.view.Gravity
@@ -24,10 +25,10 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Locale
 import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 import java.util.TimeZone
 
 object Helper {
@@ -101,7 +102,7 @@ object Helper {
         }
     }
 
-    fun formatToDecimal(number: Number): Number {
+    fun formatToDecimal(number: Float): Float {
         val df = DecimalFormat("#.##")
 //        df.roundingMode = RoundingMode.CEILING
         return df.format(number).toFloat()
@@ -162,5 +163,21 @@ object Helper {
     fun getParsedDateToLocale(timestamp: String): String {
         val date: Date = parseUTCDate(timestamp)
         return getSimpleDate(date)
+    }
+
+    @Suppress("DEPRECATION")
+    fun isHasInternetConnection(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
+    }
+
+    fun bitmapToImage(bitmap: Bitmap, context: Context): File {
+        val file = createCustomTempFile(context, ".jpg")
+        val outputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.flush()
+        outputStream.close()
+        return file
     }
 }

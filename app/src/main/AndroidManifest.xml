@@ -20,6 +20,9 @@
         android:theme="@style/Theme.WaterWise"
         tools:targetApi="31">
         <activity
+            android:name=".water_detection.ui.DetectByDataActivity"
+            android:exported="false" />
+        <activity
             android:name=".water_detection.ui.DetectResultActivity"
             android:exported="false" />
         <activity
