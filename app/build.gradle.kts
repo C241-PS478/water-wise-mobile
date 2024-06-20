@@ -29,6 +29,7 @@ android {
 
         buildConfigField("String", "NEWS_API_KEY", "\"$newsApiKey\"")
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+        buildConfigField("String", "MAPS_API_KEY", "\"AIzaSyBL1ivhwWccabvJ1yxx2KD_dY3EFH5l9CM\"")
     }
 
     buildTypes {
@@ -68,7 +69,10 @@ dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.play.services.maps)
     implementation(libs.firebase.auth)
+    implementation(libs.androidx.datastore.core.android)
     implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.datastore.preferences.core.jvm)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -76,8 +80,13 @@ dependencies {
     implementation (libs.retrofit2.converter.gson)
     implementation(libs.logging.interceptor)
     implementation (libs.kotlin.stdlib)
+    implementation (libs.androidx.datastore.preferences)
 
+    implementation(libs.firebase.auth.ktx)
     implementation(libs.play.services.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     implementation(libs.play.services.location)
 
     // Custom Component

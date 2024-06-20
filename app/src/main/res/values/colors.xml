@@ -9,10 +9,10 @@
     <color name="seaBlue">#216A8F</color>
     <color name="pearlBlue">#001C32</color>
 
-    <color name="success_badge">#6DE86A</color>
+    <color name="success_badge">#41CA58</color>
     <color name="error_badge">#E33629</color>
 
-    <color name="toast_success">#6DE86A</color>
+    <color name="toast_success">#41CA58</color>
     <color name="toast_error">#E33629</color>
     <color name="toast_warning">#FDAF17</color>
     <color name="light_blue_400">#FF29B6F6</color>
