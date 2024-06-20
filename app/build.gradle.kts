@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id ("kotlin-android")
+    id("kotlin-parcelize")
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
@@ -28,6 +29,7 @@ android {
 
         buildConfigField("String", "NEWS_API_KEY", "\"$newsApiKey\"")
         buildConfigField("String", "BASE_API_URL", "\"https://waterwise-dev-hbwh3ueebq-de.a.run.app/\"")
+        buildConfigField("String", "API_BASE_KEY", "\"bisabisabisa\"")
     }
 
     buildTypes {
@@ -86,6 +88,7 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.play.services.location)
+    implementation (libs.firebase.bom)
 
     // Custom Component
     implementation(libs.material)

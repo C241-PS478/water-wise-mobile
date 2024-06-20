@@ -10,6 +10,8 @@ import bangkit.capstone.waterwise.adapter.IntroPagerAdapter
 import bangkit.capstone.waterwise.data.datastore.model.IntroItem
 import bangkit.capstone.waterwise.databinding.ActivityIntroBinding
 import bangkit.capstone.waterwise.ui.authentication.LoginActivity
+import bangkit.capstone.waterwise.ui.main.MainActivity
+import bangkit.capstone.waterwise.water_detection.ui.CameraActivity
 import com.google.android.material.tabs.TabLayoutMediator
 
 class IntroActivity : AppCompatActivity() {
@@ -24,6 +26,10 @@ class IntroActivity : AppCompatActivity() {
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.skipIntro.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         introItems = listOf(
             IntroItem(R.drawable.intro_illustration_1, "Welcome to WaterWise!", "Experience the power of technology in ensuring clean water. WaterWise helps you detect water clarity and share your findings with others. Join a global community committed to clean water."),

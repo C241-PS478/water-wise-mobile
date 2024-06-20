@@ -10,8 +10,6 @@ import bangkit.capstone.waterwise.R
 
 class CustomPhoneReq : AppCompatEditText {
 
-    val phoneErrorMessage = resources.getString(R.string.invalid_phone)
-
     constructor(context: Context) : super(context) {
         init()
     }
@@ -25,7 +23,9 @@ class CustomPhoneReq : AppCompatEditText {
     }
 
     private fun init() {
-        filters = arrayOf(InputFilter.LengthFilter(14))
+        filters = arrayOf(InputFilter.LengthFilter(14))  // Set maximum length to 14 characters
+        inputType = android.text.InputType.TYPE_CLASS_PHONE  // Set input type to phone
+
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Do nothing
@@ -33,20 +33,19 @@ class CustomPhoneReq : AppCompatEditText {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 error = if (!isPhoneValid(s as Editable)) {
-                    phoneErrorMessage
-                }else{
+                    context.getString(R.string.invalid_phone)
+                } else {
                     null
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {
+            override fun afterTextChanged(s: Editable?) {
                 // Do nothing
             }
-
         })
     }
 
     private fun isPhoneValid(phone: Editable): Boolean {
-        return phone.length <= 14 && phone.length > 0
+        return phone.length <= 14 && phone.length > 0 && phone.matches(Regex("^[0-9]*\$"))
     }
 }

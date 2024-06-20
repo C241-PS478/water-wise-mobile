@@ -11,13 +11,12 @@ import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import bangkit.capstone.waterwise.result.Result
 import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.data.datastore.model.UserModel
 import bangkit.capstone.waterwise.databinding.ActivityLoginBinding
+import bangkit.capstone.waterwise.result.Result
 import bangkit.capstone.waterwise.ui.main.MainActivity
 import bangkit.capstone.waterwise.utils.CustomToast
 import bangkit.capstone.waterwise.utils.ViewModelFactory
@@ -40,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: AuthViewModel
     private lateinit var auth: FirebaseAuth
-    private lateinit var customToast : CustomToast
+    private lateinit var customToast: CustomToast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +55,11 @@ class LoginActivity : AppCompatActivity() {
 
         setupViewModel()
         setupAction()
+
+        binding.registerButton.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun googleSignIn() {
@@ -97,7 +101,6 @@ class LoginActivity : AppCompatActivity() {
                     Log.e(TAG, "Unexpected type of credential")
                 }
             }
-
             else -> {
                 Log.e(TAG, "Unexpected type of credential")
             }
@@ -112,46 +115,14 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "signInWithCredential:success")
                     val user: FirebaseUser? = auth.currentUser
                     user?.let {
-                        lifecycleScope.launch {
-                            viewModel.loginWithGoogle(it.uid, it.email ?: "")
-                        }
+                        viewModel.loginWithGoogle(it.uid, it.email ?: "")
                     }
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
-                }
-            }
-    }
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory.getInstance(this)
-        )[AuthViewModel::class.java]
-
-        viewModel.loginResult.observe(this, Observer { result ->
-            when (result) {
-                is Result.Loading -> showLoading(true)
-                is Result.Success -> {
-                    showLoading(false)
                     MotionToast.createColorToast(
                         this@LoginActivity,
-                        title = "Success",
-                        message = result.data.message,
-                        style = MotionToastStyle.SUCCESS,
-                        position = Gravity.BOTTOM,
-                        duration = MotionToast.LONG_DURATION,
-                        null
-                    )
-                    // Navigate to MainActivity
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                }
-                is Result.Error -> {
-                    showLoading(false)
-                    MotionToast.createColorToast(
-                        this@LoginActivity,
-                        title = "Error found",
-                        message = result.error,
+                        title = "Error",
+                        message = "Google sign-in failed",
                         style = MotionToastStyle.ERROR,
                         position = Gravity.BOTTOM,
                         duration = MotionToast.LONG_DURATION,
@@ -159,41 +130,29 @@ class LoginActivity : AppCompatActivity() {
                     )
                 }
             }
-        })
     }
 
-    private fun setupAction() {
-        binding.loginButton.setOnClickListener {
-            val email = binding.emailEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[AuthViewModel::class.java]
 
-            if (email.isEmpty() || password.isEmpty()) {
-                MotionToast.createColorToast(
-                    this@LoginActivity,
-                    title = "Error email",
-                    message = R.string.null_email.toString(),
-                    style = MotionToastStyle.ERROR,
-                    position = Gravity.BOTTOM,
-                    duration = MotionToast.LONG_DURATION,
-                    null
-                )
-                return@setOnClickListener
-            }
-
-            showLoading(true)
-
-            viewModel.login(email, password)
-            viewModel.loginResult.observe(this) { result ->
+        viewModel.loginGoogleResult.observe(this) { result ->
+            if (result != null) {
                 when (result) {
                     is Result.Loading -> {
                         showLoading(true)
                     }
+
                     is Result.Success -> {
                         showLoading(false)
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
                         MotionToast.createColorToast(
                             this@LoginActivity,
                             title = "Success",
-                            message = R.string.login_success.toString(),
+                            message = "Google sign-in successful",
                             style = MotionToastStyle.SUCCESS,
                             position = Gravity.BOTTOM,
                             duration = MotionToast.LONG_DURATION,
@@ -207,11 +166,9 @@ class LoginActivity : AppCompatActivity() {
                             true
                         )
                         viewModel.saveSession(user)
-
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(intent)
                         finish()
                     }
+
                     is Result.Error -> {
                         showLoading(false)
                         MotionToast.createColorToast(
@@ -224,6 +181,74 @@ class LoginActivity : AppCompatActivity() {
                             null
                         )
                     }
+                }
+            }
+        }
+    }
+
+    private fun setupAction() {
+        binding.loginButton.setOnClickListener {
+            val email = binding.emailEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
+
+            if (email.isEmpty() || password.isEmpty()) {
+                MotionToast.createColorToast(
+                    this@LoginActivity,
+                    title = "Error",
+                    message = "Email or password cannot be empty",
+                    style = MotionToastStyle.ERROR,
+                    position = Gravity.BOTTOM,
+                    duration = MotionToast.LONG_DURATION,
+                    null
+                )
+                return@setOnClickListener
+            }
+
+            showLoading(true)
+
+            viewModel.login(email, password)
+        }
+
+        viewModel.loginResult.observe(this) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    showLoading(true)
+                }
+                is Result.Success -> {
+                    showLoading(false)
+                    MotionToast.createColorToast(
+                        this@LoginActivity,
+                        title = "Success",
+                        message = getString(R.string.login_success),
+                        style = MotionToastStyle.SUCCESS,
+                        position = Gravity.BOTTOM,
+                        duration = MotionToast.LONG_DURATION,
+                        null
+                    )
+
+                    val user = UserModel(
+                        result.data.loginResult.token,
+                        result.data.loginResult.name,
+                        result.data.loginResult.userId,
+                        true
+                    )
+                    viewModel.saveSession(user)
+
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                is Result.Error -> {
+                    showLoading(false)
+                    MotionToast.createColorToast(
+                        this@LoginActivity,
+                        title = "Error",
+                        message = result.error,
+                        style = MotionToastStyle.ERROR,
+                        position = Gravity.BOTTOM,
+                        duration = MotionToast.LONG_DURATION,
+                        null
+                    )
                 }
             }
         }

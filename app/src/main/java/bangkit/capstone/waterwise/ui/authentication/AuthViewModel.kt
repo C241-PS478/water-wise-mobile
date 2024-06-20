@@ -1,11 +1,13 @@
 package bangkit.capstone.waterwise.ui.authentication
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bangkit.capstone.waterwise.data.datastore.model.UserModel
 import bangkit.capstone.waterwise.data.datastore.repository.UserRepository
 import bangkit.capstone.waterwise.data.remote.response.LoginResponse
+import bangkit.capstone.waterwise.data.remote.response.RegisterResponse
 import bangkit.capstone.waterwise.result.Result
 import kotlinx.coroutines.launch
 
@@ -13,9 +15,26 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     val loginResult: LiveData<Result<LoginResponse>> get() = userRepository.loginResult
 
+    private val _loginGoogleResult = MutableLiveData<Result<LoginResponse>>()
+    val loginGoogleResult: LiveData<Result<LoginResponse>> get() = _loginGoogleResult
+
     fun login(email: String, password: String) {
         viewModelScope.launch {
             userRepository.login(email, password)
+        }
+    }
+
+    fun register(
+        name: String,
+        phoneNumber: String,
+        username: String,
+        email: String,
+        password: String
+    ): LiveData<Result<RegisterResponse>> = userRepository.register(name, phoneNumber, username, email, password)
+
+    fun getSession() {
+        viewModelScope.launch {
+            userRepository.getSession()
         }
     }
 
@@ -27,14 +46,8 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     fun loginWithGoogle(firebaseId: String, email: String) {
         viewModelScope.launch {
-            userRepository.loginWithGoogle(firebaseId, email)
+            val result = userRepository.loginWithGoogle(firebaseId, email)
+            _loginGoogleResult.postValue(result)
         }
     }
-
-    suspend fun register(
-        name: String,
-        phoneNumber: String,
-        email: String,
-        password: String
-    ) = userRepository.register(name, phoneNumber, email, password)
 }

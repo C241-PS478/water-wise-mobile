@@ -8,237 +8,244 @@
     android:background="?attr/backgroundColor"
     tools:context=".ui.authentication.RegisterActivity">
 
-    <!-- Logo -->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal2"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/logo_waterwise" />
+        android:fillViewport="true">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/app_name"
-        android:textAppearance="@style/header_24"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal" />
-
-    <TextView
-        android:id="@+id/nameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/prompt_name"
-        android:textAppearance="@style/subheader16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
-
-    <!-- TextInputLayout untuk Email -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nameETLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nameEditText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:fontFamily="@font/poppins_medium"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            tools:ignore="SpeakableTextPresentCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
 
-    <!-- TextView untuk Email -->
-    <TextView
-        android:id="@+id/emailTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/prompt_phone"
-        android:textAppearance="@style/subheader16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameETLayout" />
+            <!-- Logo -->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:layout_marginTop="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/logo_waterwise" />
 
-    <!-- TextInputLayout untuk Email -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailETLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView">
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:text="@string/app_name"
+                android:textAppearance="@style/header_24"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-        <bangkit.capstone.waterwise.custom.CustomEmailReq
-            android:id="@+id/emailEditText"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:fontFamily="@font/poppins_medium"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            tools:ignore="SpeakableTextPresentCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/prompt_name"
+                android:textAppearance="@style/subheader16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-    <TextView
-        android:id="@+id/phoneTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/prompt_email"
-        android:textAppearance="@style/subheader16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailETLayout" />
+            <!-- TextInputLayout untuk Nama -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameETLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameTextView">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/phoneETLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneTextView">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:ems="10"
+                    android:inputType="text"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <bangkit.capstone.waterwise.custom.CustomEmailReq
-            android:id="@+id/phoneEditText"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:fontFamily="@font/poppins_medium"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            tools:ignore="SpeakableTextPresentCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <!-- TextView untuk Email -->
+            <TextView
+                android:id="@+id/emailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/prompt_email"
+                android:textAppearance="@style/subheader16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameETLayout" />
 
-    <!-- TextView untuk Password -->
-    <TextView
-        android:id="@+id/passwordTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/prompt_password"
-        android:textSize="16sp"
-        android:textColor="?attr/textFillColor"
-        android:fontFamily="@font/poppins_medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneETLayout" />
+            <!-- TextInputLayout untuk Email -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailETLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailTextView">
 
-    <!-- TextInputLayout untuk Password -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordEditTextLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:endIconMode="password_toggle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextView" >
+                <bangkit.capstone.waterwise.custom.CustomEmailReq
+                    android:id="@+id/emailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <bangkit.capstone.waterwise.custom.CustomPasswordReq
-            android:id="@+id/passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:fontFamily="@font/poppins_medium"
-            android:ems="10"
-            android:inputType="textPassword"
-            tools:ignore="SpeakableTextPresentCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <!-- TextView untuk Phone -->
+            <TextView
+                android:id="@+id/phoneTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/prompt_phone"
+                android:textAppearance="@style/subheader16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailETLayout" />
 
-    <!-- Button untuk Login -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/registerButton"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/button_rounded"
-        android:text="@string/btn_register"
-        android:textAllCaps="false"
-        android:textSize="14sp"
-        android:fontFamily="@font/poppins_semibold"
-        android:textColor="?attr/backgroundColor"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"/>
+            <!-- TextInputLayout untuk Phone -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneETLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneTextView">
 
-    <TextView
-        android:id="@+id/ishave_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/ishave_account"
-        android:textAppearance="@style/subheader16"
-        app:layout_constraintEnd_toStartOf="@+id/login_click"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerButton"
-        tools:ignore="TextContrastCheck" />
+                <bangkit.capstone.waterwise.custom.CustomPhoneReq
+                    android:id="@+id/phoneEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:ems="10"
+                    android:inputType="phone"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/login_click"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/btn_login"
-        android:textAppearance="@style/blue_subheader16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.730"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerButton"
-        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+            <!-- TextView untuk Password -->
+            <TextView
+                android:id="@+id/passwordTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/prompt_password"
+                android:textSize="16sp"
+                android:textColor="?attr/textFillColor"
+                android:fontFamily="@font/poppins_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneETLayout" />
 
-    <!-- Guideline untuk penyesuaian layout -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHorizontal2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="37dp" />
+            <!-- TextInputLayout untuk Password -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordEditTextLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.TextInputLayout.Rounded"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                app:endIconMode="password_toggle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordTextView" >
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="150dp" />
+                <bangkit.capstone.waterwise.custom.CustomPasswordReq
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/button_rounded"
+                android:text="@string/btn_register"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="?attr/backgroundColor"
+                app:backgroundTint="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/ishave_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ishave_account"
+                    android:textAppearance="@style/subheader16"
+                    tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/login_click"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/btn_login"
+                    android:textAppearance="@style/blue_subheader16"
+                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressBar"
@@ -251,5 +258,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

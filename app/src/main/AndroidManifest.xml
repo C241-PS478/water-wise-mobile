@@ -22,7 +22,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBL1ivhwWccabvJ1yxx2KD_dY3EFH5l9CM" />
+            android:value="AIzaSyBrT1ExojJtoVms7rnFtkgF_ivqrtf6QEE" />
 
         <activity
             android:name=".water_detection.ui.DetectByDataActivity"
@@ -44,6 +44,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.main.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MapsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.starting.IntroActivity"

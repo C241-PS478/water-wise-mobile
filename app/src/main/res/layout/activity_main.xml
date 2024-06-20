@@ -96,8 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
                 android:text="@string/maps_on_main"
-                android:fontFamily="@font/poppins_bold"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -213,6 +213,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressBar"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:lottie_fileName="loadingWater.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/bottomAppBarLayout"
