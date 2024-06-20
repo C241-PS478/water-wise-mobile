@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -25,6 +24,7 @@ import bangkit.capstone.waterwise.utils.Const.ACCESS_TOKEN
 import bangkit.capstone.waterwise.utils.CustomToast
 import bangkit.capstone.waterwise.utils.Helper
 import bangkit.capstone.waterwise.water_detection.DetectWaterViewModel
+import bangkit.capstone.waterwise.water_detection.PredictionMethod
 import bangkit.capstone.waterwise.water_detection.machine_learning.WaterDetectionModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -47,6 +47,7 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var latitude: Double? = null
     private var longitude: Double? = null
+    private var finalImage: File? = null
 
     private lateinit var waterDetectionModel: WaterDetectionModel
     private var token: String = "Bearer $ACCESS_TOKEN"
@@ -65,6 +66,7 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
         enableEdgeToEdge()
 
         formReviewDialog = ReviewFormDialog(reviewViewModel, detectWaterViewModel)
+        onReviewSubmitted(PredictionMethod.BY_IMAGE)
 
         token = "Bearer $ACCESS_TOKEN"
 
@@ -78,13 +80,18 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
                 showSendReviewFormDialog()
             }
             btnTryAgain.setOnClickListener {
-                detectWaterViewModel.detectWaterUsingModel(_rotatedBitmap!!, waterDetectionModel)
+                if (Helper.isHasInternetConnection(context)) {
+                    detectWaterViewModel.predictQuality(context, token, finalImage!!)
+                } else {
+                    detectWaterViewModel.detectWaterUsingModel(_rotatedBitmap!!, waterDetectionModel)
+                }
             }
             btnBack.setOnClickListener {
                 finish()
             }
             predictionMethodTitle.setOnClickListener{
                 startActivity(Intent(context, DetectByDataActivity::class.java))
+                finish()
             }
         }
 
@@ -96,9 +103,9 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
         _rotatedBitmap = rotatedBitmap
         binding.waterSourceImg.setImageBitmap(rotatedBitmap)
 
+        finalImage = Helper.bitmapToImage(rotatedBitmap, this)
         if (Helper.isHasInternetConnection(this)) {
-            val imgFile = Helper.bitmapToImage(rotatedBitmap, this)
-            detectWaterViewModel.predictQuality(this, token, imgFile)
+            detectWaterViewModel.predictQuality(this, token, finalImage!!)
         } else {
             detectWaterViewModel.detectWaterUsingModel(rotatedBitmap, waterDetectionModel)
         }
@@ -110,11 +117,12 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
         detectWaterViewModel.apply {
             isLoading.observe(context) {
                 if (it) {
+                    binding.errorMessageContainer.visibility = GONE
                     binding.loaderContainer.visibility = VISIBLE
+                    binding.sendReviewBtnResult.visibility = GONE
                 } else {
                     binding.loaderContainer.visibility = GONE
                     binding.sendReviewSuccessMessage.visibility = GONE
-                    loadingDialog.dismiss()
                 }
             }
 
@@ -231,12 +239,12 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
     }
 
     private fun getMyCurrentLocation() {
-        reviewViewModel.setFetchingLocationState(true)
         if (ContextCompat.checkSelfPermission(
                 (this),
                 Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         ) {
+            reviewViewModel.setFetchingLocationState(true)
             if(latitude == null && longitude == null){
                 fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, null).addOnSuccessListener { location ->
                     if (location != null) {
@@ -284,16 +292,6 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
         }
     }
 
-    private fun setFormReviewDialogResult(isDrinkable: Boolean, textView: TextView) {
-        if(isDrinkable) {
-            textView.text = getString(R.string.result_drinkable)
-            textView.setTextColor(getColor(R.color.success_badge))
-        } else {
-            textView.text = getString(R.string.result_not_drinkable)
-            textView.setTextColor(getColor(R.color.error_badge))
-        }
-    }
-
     override fun onTokenRetrieved(token: String) {
         this.token = token
         formReviewDialog.onTokenRetrieved(token)
@@ -307,5 +305,9 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
 
     override fun onPredictionIdRetrieved(id: String) {
         formReviewDialog.onPredictionIdRetrieved(id)
+    }
+
+    override fun onReviewSubmitted(predictionMethod: PredictionMethod) {
+        formReviewDialog.onReviewSubmitted(predictionMethod)
     }
 }

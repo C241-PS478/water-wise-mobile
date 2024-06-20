@@ -93,7 +93,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <ImageView
                 android:layout_width="70dp"
@@ -132,13 +132,14 @@
             android:id="@+id/send_review_success_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:text="@string/send_review_success"
-            android:textSize="11sp"
             android:textColor="@color/grey"
+            android:textSize="11sp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/water_quality_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/water_quality_title"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/water_quality_title"
