@@ -16,6 +16,8 @@
     <string name="title_intro">Title Intro</string>
     <string name="desc_intro">Description Intro</string>
     <string name="image_intro">Image Intro</string>
+    <string name="skip_intro">SKIP</string>
+
     <string name="title_activity_login">Login Activity</string>
     <string name="prompt_phone">Phone Number</string>
     <string name="prompt_email">Email</string>
@@ -55,6 +57,8 @@
     <string name="button_detect_image">Deteksi gambar</string>
     <string name="button_detect_data">Deteksi data</string>
     <string name="news_on_main">Kabar air terkini</string>
+    <string name="more_news">more</string>
+
 
     <!--Camera-->
     <string name="open_gallery">Open Gallery</string>

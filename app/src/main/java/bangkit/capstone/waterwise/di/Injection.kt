@@ -1,7 +1,6 @@
 package bangkit.capstone.waterwise.di
 
 import android.content.Context
-import bangkit.capstone.waterwise.data.database.PostDatabase
 import bangkit.capstone.waterwise.data.datastore.pref.UserDataStore
 import bangkit.capstone.waterwise.data.datastore.pref.UserPreference
 import bangkit.capstone.waterwise.data.datastore.repository.UserRepository

@@ -1,16 +1,18 @@
 package bangkit.capstone.waterwise.ui.main
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
 import bangkit.capstone.waterwise.R
+import bangkit.capstone.waterwise.result.Result
 import bangkit.capstone.waterwise.databinding.ActivityMainBinding
-import bangkit.capstone.waterwise.databinding.ActivityNewsBinding
 import bangkit.capstone.waterwise.news.NewsAdapter
 import bangkit.capstone.waterwise.news.NewsViewModel
 import bangkit.capstone.waterwise.news.ui.NewsActivity
@@ -24,17 +26,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
-    private lateinit var newsbinding: ActivityNewsBinding
     private val newsAdapter = NewsAdapter()
     private val newsViewModel = NewsViewModel()
 
     private val loadingDialog by lazy { Helper.loadingDialog(this) }
 
-    val username = intent.getStringExtra(USER_EXTRA)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         setupRecyclerView()
         getUserData()
@@ -60,11 +63,9 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.menu.getItem(2).isEnabled = false
 
         with(binding) {
-            bottomNavigationView.background = null
-            bottomNavigationView.menu.getItem(2).isEnabled = false
             bottomNavigationView.setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    R.id.navbarHome ->  true
+                    R.id.navbarHome -> true
 
                     R.id.navbarNews -> {
                         startActivity(Intent(this@MainActivity, NewsActivity::class.java))
@@ -94,22 +95,17 @@ class MainActivity : AppCompatActivity() {
                     try {
                         newsAdapter.submitData(pagingData)
                     } catch (e: Exception) {
-                        // Handle any exceptions that occur during data submission
-                        // For example, you can show an error message or log the error
                         e.printStackTrace()
                     }
                 }
             }
 
-
-            setupRecyclerView()
-        }
-
-        newsViewModel.isLoading.observe(this) {
-            if (it) {
-                loadingDialog.show()
-            } else {
-                loadingDialog.dismiss()
+            newsViewModel.isLoading.observe(this@MainActivity) {
+                if (it) {
+                    loadingDialog.show()
+                } else {
+                    loadingDialog.dismiss()
+                }
             }
         }
     }
@@ -122,19 +118,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getUserData() {
-        if (username != null) {
-            mainViewModel.getName(username)
-        }
-
-        mainViewModel.user.observe(this) {
-            if (it != null) {
-                binding.tvHelloName.text = "Hello, ${it.name}!"
-
+        mainViewModel.loginResult.observe(this) { result ->
+            when (result) {
+                is Result.Success -> {
+                    val loginResult = result.data.loginResult
+                    binding.tvHelloName.text = "Hello, ${loginResult.name}!"
+                }
+                is Result.Error -> {
+                    // Handle error, e.g., show a message
+                }
+                is Result.Loading -> {
+                    // Handle loading state if needed
+                }
             }
         }
-    }
-    companion object {
-        const val USER_EXTRA = "USERNAME"
     }
 }

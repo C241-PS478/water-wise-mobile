@@ -26,10 +26,11 @@ android {
         properties.load(localProperties.inputStream())
         val newsApiKey = properties.getProperty("news.api.key")
         val baseAPIUrl = properties.getProperty("base.api.url")
+        val mapsAPIUrl = properties.getProperty("base.api.maps")
 
         buildConfigField("String", "NEWS_API_KEY", "\"$newsApiKey\"")
         buildConfigField("String", "BASE_API_URL", "\"$baseAPIUrl\"")
-        buildConfigField("String", "MAPS_API_KEY", "\"AIzaSyBL1ivhwWccabvJ1yxx2KD_dY3EFH5l9CM\"")
+        buildConfigField("String", "MAPS_API_KEY", "\"$mapsAPIUrl\"")
     }
 
     buildTypes {

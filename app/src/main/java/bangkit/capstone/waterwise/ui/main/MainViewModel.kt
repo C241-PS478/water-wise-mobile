@@ -1,19 +1,19 @@
 package bangkit.capstone.waterwise.ui.main
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import bangkit.capstone.waterwise.data.datastore.repository.UserRepository
 import bangkit.capstone.waterwise.data.remote.api.ApiConfig
-import bangkit.capstone.waterwise.data.remote.api.ApiService
+import bangkit.capstone.waterwise.data.remote.response.LoginResponse
 import bangkit.capstone.waterwise.news.Service
 import bangkit.capstone.waterwise.remote.response.MainResponse
+import bangkit.capstone.waterwise.result.Result
 import bangkit.capstone.waterwise.utils.Api
-import bangkit.capstone.waterwise.water_detection.ui.CameraActivity.Companion.TAG
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class MainViewModel {
+class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
     val newsService = Api.service(Service::class.java)
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -22,33 +22,10 @@ class MainViewModel {
     private val _user = MutableLiveData<MainResponse?>()
     val user: LiveData<MainResponse?> = _user
 
-    fun getName(username: String) {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getName(username)
-        client.enqueue(object : Callback<MainResponse> {
-            override fun onResponse(
-                call: Call<MainResponse>,
-                response: Response<MainResponse>
-            ) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _user.value = response.body()
-                } else {
-                    Log.e(TAG, response.message())
-                }
-            }
+    val loginResult: LiveData<Result<LoginResponse>> get() = userRepository.loginResult
 
-            override fun onFailure(call: Call<MainResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(TAG, t.message ?: "Unknown error")
-            }
-        })
-    }
-
-    fun findSomeNews(){
-//        val apiKey = BuildConfig.NEWS_API_KEY
+    fun findSomeNews() {
         val apiKey = ""
         val client = newsService.findSome(apiKey)
-
     }
 }

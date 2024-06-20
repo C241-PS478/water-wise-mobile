@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import bangkit.capstone.waterwise.R
+import bangkit.capstone.waterwise.ui.main.MainActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -17,10 +18,10 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar?.hide()
         Handler(Looper.getMainLooper()).postDelayed({
 
-            val intent = Intent(this, IntroActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
 
-        }, 3000L)
+        }, 4000L)
     }
 }

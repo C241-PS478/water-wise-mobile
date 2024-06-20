@@ -7,8 +7,8 @@
         <Constraint
             android:id="@+id/splashImage"
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             motion:layout_constraintTop_toBottomOf="@id/splashImage"
             motion:layout_constraintStart_toStartOf="@id/splashImage"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="48dp"
             android:visibility="invisible" />
     </ConstraintSet>
 
@@ -29,8 +29,8 @@
         <Constraint
             android:id="@+id/splashImage"
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
@@ -39,13 +39,14 @@
             motion:layout_constraintEnd_toEndOf="@id/splashImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="24sp"
             motion:layout_constraintTop_toBottomOf="@id/splashImage"
             motion:layout_constraintStart_toStartOf="@id/splashImage"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="24dp" />
     </ConstraintSet>
     <Transition
         motion:constraintSetStart="@+id/start"
         motion:constraintSetEnd="@+id/end"
         motion:autoTransition="animateToEnd"
-        motion:duration="1500" />
+        motion:duration="2000" ><OnSwipe motion:springDamping="33.094" motion:springMass="1.0"/></Transition>
 </MotionScene>

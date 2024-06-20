@@ -22,7 +22,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".water_detection.ui.DetectByDataActivity"
@@ -43,10 +43,10 @@
             android:name=".ui.authentication.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.starting.IntroActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.starting.IntroActivity"
             android:exported="false" />
         <activity
             android:name=".ui.starting.SplashActivity"
