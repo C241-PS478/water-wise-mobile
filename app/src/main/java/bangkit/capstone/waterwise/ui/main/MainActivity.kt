@@ -11,12 +11,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
 import bangkit.capstone.waterwise.R
-import bangkit.capstone.waterwise.result.Result
+import bangkit.capstone.waterwise.data.datastore.model.UserModel
+import bangkit.capstone.waterwise.data.datastore.pref.UserDataStore
+import bangkit.capstone.waterwise.data.datastore.pref.UserPreference
+import bangkit.capstone.waterwise.data.datastore.repository.UserRepository
+import bangkit.capstone.waterwise.data.remote.api.ApiConfig
+import bangkit.capstone.waterwise.data.remote.api.ApiService
 import bangkit.capstone.waterwise.databinding.ActivityMainBinding
 import bangkit.capstone.waterwise.news.NewsAdapter
 import bangkit.capstone.waterwise.news.NewsViewModel
 import bangkit.capstone.waterwise.news.ui.NewsActivity
+import bangkit.capstone.waterwise.result.Result
 import bangkit.capstone.waterwise.utils.Helper
+import bangkit.capstone.waterwise.utils.ViewModelFactory
 import bangkit.capstone.waterwise.water_detection.ui.CameraActivity
 import bangkit.capstone.waterwise.water_detection.ui.DetectByDataActivity
 import kotlinx.coroutines.launch
@@ -31,16 +38,20 @@ class MainActivity : AppCompatActivity() {
 
     private val loadingDialog by lazy { Helper.loadingDialog(this) }
 
+    private lateinit var apiService: ApiService
+    private lateinit var userPreference: UserPreference
+
+    private lateinit var userSession: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        userPreference = UserPreference.getInstance(UserDataStore)
 
+        setUserDataFromSession()
         setupRecyclerView()
-        getUserData()
 
         binding.mapThumbnail.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
@@ -66,7 +77,6 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.setOnNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.navbarHome -> true
-
                     R.id.navbarNews -> {
                         startActivity(Intent(this@MainActivity, NewsActivity::class.java))
                         finish()
@@ -76,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                     else -> false
                 }
             }
-            bottomNavigationView.selectedItemId = R.id.navbarNews
+            bottomNavigationView.selectedItemId = R.id.navbarHome
 
             fab.setOnClickListener {
                 if (Helper.isPermissionGranted(this@MainActivity, Manifest.permission.CAMERA)) {
@@ -134,5 +144,26 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun setUserDataFromSession() {
+        lifecycleScope.launch {
+            userPreference.getSession().collect { userModel ->
+                val token = userModel.token
+                val name = userModel.name
+                val userId = userModel.userId
+                val isLoggedIn = userModel.isLogin
+
+                userSession = UserModel(token, name, userId, isLoggedIn)
+                apiService = ApiConfig.getApiService(token)
+            }
+            initViewModel()
+            getUserData()
+        }
+    }
+
+    private fun initViewModel() {
+        val userRepo = UserRepository.getInstance(apiService, userPreference)
+        mainViewModel = ViewModelProvider(this, ViewModelFactory(userRepo))[MainViewModel::class.java]
     }
 }
