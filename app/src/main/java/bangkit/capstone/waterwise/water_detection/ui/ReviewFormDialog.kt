@@ -19,9 +19,11 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.DialogFragment
 import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.review.ReviewViewModel
+import bangkit.capstone.waterwise.review.types.CreateReviewByDataReq
 import bangkit.capstone.waterwise.review.types.CreateReviewReq
 import bangkit.capstone.waterwise.review.types.ReviewFormDialogListener
 import bangkit.capstone.waterwise.water_detection.DetectWaterViewModel
+import bangkit.capstone.waterwise.water_detection.PredictionMethod
 import com.google.android.material.textfield.TextInputEditText
 
 class ReviewFormDialog(
@@ -40,6 +42,7 @@ class ReviewFormDialog(
     private var token: String? = null
 
     private var tokenListener: ReviewFormDialogListener? = null
+    private var predictionMethod: PredictionMethod? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -67,12 +70,11 @@ class ReviewFormDialog(
         }
 
         sendReviewSubmitBtn?.setOnClickListener {
-            sendReview(
-                lat!!,
-                long!!,
-                predictionId!!,
-                token!!
-            )
+            when(predictionMethod) {
+                PredictionMethod.BY_IMAGE -> sendReview(lat!!, long!!, predictionId!!, token!!)
+                PredictionMethod.BY_DATA -> sendReviewFromPredictionByData(lat!!, long!!, predictionId!!, token!!)
+                else -> throw RuntimeException("Prediction method is not set")
+            }
             dismiss()
         }
 
@@ -111,6 +113,10 @@ class ReviewFormDialog(
         this.predictionId = id
     }
 
+    override fun onReviewSubmitted(predictionMethod: PredictionMethod) {
+        this.predictionMethod = predictionMethod
+    }
+
     private fun setFormReviewWhenFetchingLocation(isFetching: Boolean) {
         sendReviewLoader?.visibility = if(isFetching) VISIBLE else GONE
         sendReviewSubmitBtn?.visibility = if(isFetching) GONE else VISIBLE
@@ -139,5 +145,15 @@ class ReviewFormDialog(
             predictionId
         )
         reviewViewModel.createReview(data,token)
+    }
+
+    private fun sendReviewFromPredictionByData(lat: Double, long: Double, predictionIotId: String, token: String) {
+        val data = CreateReviewByDataReq(
+            lat,
+            long,
+            getDescInput(),
+            predictionIotId
+        )
+        reviewViewModel.createReviewFromPredictionByData(data, token)
     }
 }

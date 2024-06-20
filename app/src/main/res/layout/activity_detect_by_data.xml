@@ -70,8 +70,22 @@
             app:icon="@drawable/ic_iot"
             app:iconGravity="textEnd"
             app:iconSize="15dp"
+            tools:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/send_review_success_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_review_success"
+            android:textColor="@color/grey"
+            android:textSize="11sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/title"
+            tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/send_review_btn_result"
@@ -115,12 +129,12 @@
             app:layout_constraintTop_toBottomOf="@+id/input_text_kepadatan" />
 
         <bangkit.capstone.waterwise.water_detection.ui.CustomInputText
-            android:id="@+id/input_text_kekerasan"
+            android:id="@+id/input_text_kekeruhan"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             app:editTextHeight="50dp"
             app:editTextUnit="mg/L"
-            app:labelText="Kekerasan"
+            app:labelText="Kekeruhan"
             app:labelTextColor="@color/grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/input_text_klorin" />
@@ -173,7 +187,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/input_text_kekerasan"
+            app:layout_constraintTop_toBottomOf="@+id/input_text_kekeruhan"
             tools:visibility="gone" />
 
         <TextView
@@ -205,7 +219,7 @@
             android:textSize="14sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/input_text_kekerasan"
+            app:layout_constraintEnd_toEndOf="@+id/input_text_kekeruhan"
             app:layout_constraintStart_toStartOf="parent"
             tools:visibility="visible" />
 
@@ -222,9 +236,84 @@
             app:layout_constraintEnd_toEndOf="@+id/cleanliness_label"
             app:layout_constraintHorizontal_bias="0.394"
             app:layout_constraintStart_toStartOf="@+id/cleanliness_label"
-            app:layout_constraintTop_toBottomOf="@+id/input_text_kekerasan"
+            app:layout_constraintTop_toBottomOf="@+id/input_text_kekeruhan"
             tools:text="70%"
             tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/loader_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:translationZ="10dp"
+            android:visibility="gone"
+            tools:visibility="gone"
+            >
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:lottie_fileName="loadingWater.json"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/error_message_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:translationZ="100dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_errorx"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/something_wrong"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/error_message" />
+
+            <Button
+                android:id="@+id/btn_try_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_primary_rounded"
+                android:paddingHorizontal="20dp"
+                android:text="@string/try_again"
+                android:textColor="@color/white"
+                app:backgroundTint="@null" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

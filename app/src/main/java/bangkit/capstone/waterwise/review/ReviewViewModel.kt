@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import bangkit.capstone.waterwise.review.types.CreateReviewByDataReq
 import bangkit.capstone.waterwise.review.types.CreateReviewReq
 import bangkit.capstone.waterwise.review.types.CreateReviewResponse
 import bangkit.capstone.waterwise.utils.Api
@@ -40,6 +41,38 @@ class ReviewViewModel: ViewModel() {
                 val response = reviewService.createReview(
                     token,
                     predictionId,
+                    lat,
+                    long,
+                    description
+                )
+                if (response.isSuccessful) {
+                    _isSuccess.value = true
+                    _reviewResponse.value = response.body()
+                } else {
+                    _isError.value = true
+                    Log.e("createReview", "Err: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                _isError.value = true
+                Log.e("createReview", "Err: ${e.message}")
+            }
+
+            setLoadingState(false)
+        }
+    }
+
+    fun createReviewFromPredictionByData(data: CreateReviewByDataReq, token: String) {
+        setLoadingState(true)
+        val predictionIotId = data.predictionIotId
+        val lat = data.lat
+        val long = data.long
+        val description = data.description
+
+        viewModelScope.launch {
+            try {
+                val response = reviewService.createReview(
+                    token,
+                    predictionIotId,
                     lat,
                     long,
                     description

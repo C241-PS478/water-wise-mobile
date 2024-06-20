@@ -12,7 +12,7 @@ interface Service {
     @FormUrlEncoded
     suspend fun createReview(
         @Header("Authorization") token: String,
-        @Field("predictionId") predictionId: String,
+        @Field("predictionIotId") predictionIotId: String,
         @Field("lat") lat: Double,
         @Field("long") long: Double,
         @Field("description") description: String?

@@ -13,11 +13,17 @@ interface Service {
     suspend fun predictQuality(
         @Header("Authorization") token: String,
         @Part image: MultipartBody.Part
-    ): Response<PredictionResponse>
+    ): Response<PredictionResponse<PredictionResultRes>>
 
-    @POST("/predictions")
+    @Multipart
+    @POST("/predict/iot")
     suspend fun predictQualityByData(
         @Header("Authorization") token: String,
-        @Part image: MultipartBody.Part
-    ): Response<PredictionResponse>
+        @Part("solids") solids: Float,
+        @Part("turbidity") turbidity: Float,
+        @Part("organic_carbon") organicCarbon: Float,
+        @Part("chloramines") chloramines: Float,
+        @Part("sulfate") sulfate: Float,
+        @Part("ph") ph: Float
+    ): Response<PredictionResponse<PredictionByDataRes>>
 }

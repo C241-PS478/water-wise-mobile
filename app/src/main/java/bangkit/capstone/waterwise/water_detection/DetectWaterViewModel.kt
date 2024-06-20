@@ -37,9 +37,6 @@ class DetectWaterViewModel: ViewModel() {
     private val _isDrinkable = MutableLiveData<Boolean>()
     val isDrinkable: LiveData<Boolean> = _isDrinkable
 
-    private val _isSendReviewSuccess = MutableLiveData<Boolean>()
-    val isSendReviewSuccess: LiveData<Boolean> = _isSendReviewSuccess
-
     private val _cleanlinessPercentage = MutableLiveData<Float>()
     val cleanlinessPercentage: LiveData<Float> = _cleanlinessPercentage
 
@@ -48,8 +45,14 @@ class DetectWaterViewModel: ViewModel() {
     private val _predictionResponse = MutableLiveData<PredictionResultRes>()
     val predictionResponse: LiveData<PredictionResultRes> = _predictionResponse
 
+    private val _predictionByDataResponse = MutableLiveData<PredictionByDataRes>()
+    val predictionByDataResponse: LiveData<PredictionByDataRes> = _predictionByDataResponse
+
+    private val _isUsingLocalModel = MutableLiveData<Boolean>()
+
     fun detectWaterUsingModel(bitmap: Bitmap, waterDetectionModel: WaterDetectionModel) {
         _isLoading.value = true
+        _isUsingLocalModel.value = true
 
         // classify the image
         try {
@@ -68,6 +71,7 @@ class DetectWaterViewModel: ViewModel() {
 
     fun detectWaterByDataUsingModel(data: FloatArray, potabilityIotModel: PotabilityIotModel) {
         _isLoading.value = true
+        _isUsingLocalModel.value = true
 
         // classify
         try {
@@ -121,6 +125,40 @@ class DetectWaterViewModel: ViewModel() {
                 } else if (response.code() == 400){
                     _isPhotoInvalid.value = true
                 }   else {
+                    _isError.value = true
+                    Log.e("predictQuality", "Error: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                _isError.value = true
+                Log.e("predictQuality", "Error: $e")
+            }
+
+            setLoadingState(false)
+        }
+    }
+
+    fun predictQualityByData(data: PredictionByDataReq, token: String){
+        setLoadingState(true)
+        viewModelScope.launch {
+            try {
+                val response = waterPredictionService.predictQualityByData(
+                    token,
+                    data.solids,
+                    data.turbidity,
+                    data.organicCarbon,
+                    data.chloramines,
+                    data.sulfate,
+                    data.ph
+                )
+                if (response.isSuccessful) {
+                    val prediction = response.body()?.data?.prediction
+                    _isSuccess.value = true
+                    _predictionByDataResponse.value = response.body()!!.data
+                    _cleanlinessPercentage.value = Helper.formatToDecimal(prediction?.toFloat()!!)
+
+                    Log.d("RESULT_BY_DATA", "Result: $prediction")
+                    determineDrinkable(prediction)
+                } else {
                     _isError.value = true
                     Log.e("predictQuality", "Error: ${response.message()}")
                 }
