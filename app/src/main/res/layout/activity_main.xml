@@ -6,201 +6,216 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MainActivity"
-    tools:ignore="ExtraText">
+    tools:context=".ui.main.MainActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/toolbar"
-            android:layout_width="match_parent"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/text_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="32dp"
-            android:paddingBottom="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="16dp">
 
-            <LinearLayout
-                android:id="@+id/text_layout"
+            <TextView
+                android:id="@+id/tv_hello_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/btn_notification"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:text="@string/hello_user"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:fontFamily="@font/poppins_medium" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_location"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="@string/location_user" />
 
                 <TextView
-                    android:id="@+id/tv_hello_name"
+                    android:id="@+id/location_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/hello_user"
+                    android:text="@string/location_user"
                     android:textColor="@color/white"
-                    android:textSize="24sp"
-                    android:fontFamily="@font/poppins_medium" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="4dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/ic_location"
-                        android:layout_marginEnd="4dp"
-                        android:contentDescription="@string/location_user" />
-
-                    <TextView
-                        android:id="@+id/location_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/location_user"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/lato" />
-
-                </LinearLayout>
+                    android:textSize="12sp"
+                    android:fontFamily="@font/lato" />
 
             </LinearLayout>
 
-        </androidx.appcompat.widget.Toolbar>
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btn_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="48dp"
-            android:background="@drawable/notification_button_background"
-            android:importantForAccessibility="no"
-            android:padding="12dp"
-            android:src="@drawable/ic_notification"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/title_maps_on_main"
+    <ImageButton
+        android:id="@+id/btn_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/maps_on_main"
-        android:fontFamily="@font/poppins_semibold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/map_thumbnail"
-        android:layout_width="match_parent"
-        android:background="@drawable/ic_maps_button"
-        app:backgroundTint="@null"
-        android:layout_height="160dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="24dp"
-        app:layout_constraintTop_toBottomOf="@id/title_maps_on_main"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/title_feature_on_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/feature_on_main"
-        android:fontFamily="@font/poppins_semibold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/map_thumbnail" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_detect_image"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:background="@drawable/button_rounded"
-        app:backgroundTint="@null"
-        android:text="@string/button_detect_image"
-        android:textSize="12sp"
-        android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/white"
-        android:drawablePadding="8dp"
-        app:icon="@drawable/detect_image"
-        app:iconTint="@null"
-        app:iconSize="24dp"
-        app:iconGravity="textStart"
-        android:textAllCaps="false"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/title_feature_on_main"
-        app:layout_constraintEnd_toStartOf="@id/btn_detect_data"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_detect_data"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:background="@drawable/button_rounded"
-        app:backgroundTint="@null"
-        android:text="@string/button_detect_data"
-        android:textSize="12sp"
-        android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/white"
-        android:drawablePadding="8dp"
-        app:icon="@drawable/detect_data"
-        app:iconTint="@null"
-        app:iconSize="24dp"
-        app:iconGravity="textStart"
-        android:textAllCaps="false"
-        android:layout_marginStart="4dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/title_feature_on_main"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_detect_image"/>
-
-    <TextView
-        android:id="@+id/title_news_on_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/news_on_main"
-        android:fontFamily="@font/poppins_semibold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_detect_image" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/news_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:scrollbars="horizontal"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_news_on_main"
-        tools:listitem="@layout/news_item_horizontal"
-        app:layout_constraintVertical_bias="0.045" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/progressBar"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/notification_button_background"
+        android:importantForAccessibility="no"
+        android:padding="12dp"
+        android:src="@drawable/ic_notification"
         app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="loadingWater.json"
-        app:lottie_loop="true" />
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/bottomAppBarLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title_maps_on_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/maps_on_main"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/map_thumbnail"
+                android:layout_width="match_parent"
+                android:background="@drawable/ic_maps_button"
+                android:text="@string/maps_thumbnail"
+                app:backgroundTint="@null"
+                android:layout_height="160dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="24dp"
+                app:layout_constraintTop_toBottomOf="@id/title_maps_on_main"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/title_feature_on_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/feature_on_main"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/map_thumbnail" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_detect_image"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:background="@drawable/button_rounded"
+                app:backgroundTint="@null"
+                android:text="@string/button_detect_image"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/white"
+                android:drawablePadding="8dp"
+                app:icon="@drawable/detect_image"
+                app:iconTint="@null"
+                app:iconSize="24dp"
+                app:iconGravity="textStart"
+                android:textAllCaps="false"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/title_feature_on_main"
+                app:layout_constraintEnd_toStartOf="@id/btn_detect_data"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_detect_data"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:background="@drawable/button_rounded"
+                app:backgroundTint="@null"
+                android:text="@string/button_detect_data"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/white"
+                android:drawablePadding="8dp"
+                app:icon="@drawable/detect_data"
+                app:iconTint="@null"
+                app:iconSize="24dp"
+                app:iconGravity="textStart"
+                android:textAllCaps="false"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/title_feature_on_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_detect_image"/>
+
+            <TextView
+                android:id="@+id/title_news_on_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/news_on_main"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_detect_image" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/news_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:scrollbars="horizontal"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_news_on_main"
+                tools:listitem="@layout/news_item_horizontal"
+                app:layout_constraintVertical_bias="0.045" />
+
+            <TextView
+                android:id="@+id/more_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/news_on_main"
+                android:fontFamily="@font/poppins"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/news_recycler_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/bottomAppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"

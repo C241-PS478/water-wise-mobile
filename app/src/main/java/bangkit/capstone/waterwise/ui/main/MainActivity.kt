@@ -51,6 +51,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, DetectByDataActivity::class.java)
             startActivity(intent)
         }
+        binding.moreNews.setOnClickListener {
+            val intent = Intent(this, NewsActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.bottomNavigationView.background = null
         binding.bottomNavigationView.menu.getItem(2).isEnabled = false

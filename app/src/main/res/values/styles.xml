@@ -28,7 +28,7 @@
     </style>
     <style name="circleImageView">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">200dp%</item>
+        <item name="cornerSize">100%</item>
     </style>
 
     <style name="Widget.Theme.WaterWise.MyView" parent="">
