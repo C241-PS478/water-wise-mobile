@@ -25,10 +25,10 @@ android {
         val properties = Properties()
         properties.load(localProperties.inputStream())
         val newsApiKey = properties.getProperty("news.api.key")
-        val baseUrl = properties.getProperty("base.url")
+        val baseAPIUrl = properties.getProperty("base.api.url")
 
         buildConfigField("String", "NEWS_API_KEY", "\"$newsApiKey\"")
-        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+        buildConfigField("String", "BASE_API_URL", "\"$baseAPIUrl\"")
         buildConfigField("String", "MAPS_API_KEY", "\"AIzaSyBL1ivhwWccabvJ1yxx2KD_dY3EFH5l9CM\"")
     }
 
@@ -112,4 +112,7 @@ dependencies {
     implementation(libs.tensorflow.lite.task.vision)
     // paging3
     implementation(libs.androidx.paging.runtime.ktx)
+
+    // compressor
+    implementation(libs.compressor)
 }

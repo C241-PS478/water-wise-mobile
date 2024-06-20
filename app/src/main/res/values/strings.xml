@@ -75,8 +75,13 @@
     <string name="result_drinkable_desc">This water is drinkable</string>
     <string name="result_not_drinkable_desc">This water is not drinkable</string>
 
+    <!--Review-->
+    <string name="send_review_success"> Your review has been sent</string>
+    <string name="try_again">Try Again</string>
+
     <!--Error Message-->
     <string name="error_msg_permission_gps">Please enable GPS to use this feature</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
     <string name="success_alert">Success!</string>
     <string name="error_alert">Error shown!</string>
 </resources>

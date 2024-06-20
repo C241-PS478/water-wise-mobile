@@ -1,16 +1,25 @@
 package bangkit.capstone.waterwise.water_detection
 
+import android.content.Context
 import android.graphics.Bitmap
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import bangkit.capstone.waterwise.utils.Api
 import bangkit.capstone.waterwise.utils.Const
 import bangkit.capstone.waterwise.utils.Helper
 import bangkit.capstone.waterwise.water_detection.machine_learning.PotabilityIotModel
 import bangkit.capstone.waterwise.water_detection.machine_learning.WaterDetectionModel
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 class DetectWaterViewModel: ViewModel() {
     private val _isSuccess = MutableLiveData<Boolean>()
@@ -22,6 +31,9 @@ class DetectWaterViewModel: ViewModel() {
     private val _isError = MutableLiveData<Boolean>()
     val isError: LiveData<Boolean> = _isError
 
+    private val _isPhotoInvalid = MutableLiveData<Boolean>()
+    val isPhotoInvalid: LiveData<Boolean> = _isPhotoInvalid
+
     private val _isDrinkable = MutableLiveData<Boolean>()
     val isDrinkable: LiveData<Boolean> = _isDrinkable
 
@@ -31,15 +43,20 @@ class DetectWaterViewModel: ViewModel() {
     private val _cleanlinessPercentage = MutableLiveData<Float>()
     val cleanlinessPercentage: LiveData<Float> = _cleanlinessPercentage
 
+    private val waterPredictionService = Api.service(Service::class.java)
+
+    private val _predictionResponse = MutableLiveData<PredictionResultRes>()
+    val predictionResponse: LiveData<PredictionResultRes> = _predictionResponse
+
     fun detectWaterUsingModel(bitmap: Bitmap, waterDetectionModel: WaterDetectionModel) {
         _isLoading.value = true
 
         // classify the image
         try {
             val result = waterDetectionModel.classify(bitmap)
-            val roundedResult = Helper.roundUp(result[0])
+            val roundedResult = Helper.formatToDecimal(result[0])
             _isSuccess.value = true
-            _cleanlinessPercentage.value = roundedResult.toFloat()
+            _cleanlinessPercentage.value = roundedResult
 
             Log.d("DetectWaterViewModel", "Result: ${result[0]}")
             determineDrinkable(result[0])
@@ -55,9 +72,9 @@ class DetectWaterViewModel: ViewModel() {
         // classify
         try {
             val result = potabilityIotModel.classify(data)
-            val roundedResult = Helper.roundUp(result[0])
+            val roundedResult = Helper.formatToDecimal(result[0])
             _isSuccess.value = true
-            _cleanlinessPercentage.value = roundedResult.toFloat()
+            _cleanlinessPercentage.value = roundedResult
 
             Log.d("RESULT_BY_DATA", "Result: ${result[0]}")
             determineDrinkable(result[0])
@@ -68,21 +85,60 @@ class DetectWaterViewModel: ViewModel() {
         _isLoading.value = false
     }
 
-    fun sendReview() {
-        _isLoading.value = true
+    fun predictQuality(context: Context, token: String, image: File) {
+        setLoadingState(true)
+        viewModelScope.launch {
+            var fileFinal: File? = null
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            _isLoading.value = false
-            _isSendReviewSuccess.value = true
-        }, 3000)
+            withContext(Dispatchers.IO) {
+                var compressedFile: File? = null
+                var compressedFileSize = image.length()
+
+                // Compress the file until its size is less than or equal to 1MB
+                while (compressedFileSize > 1 * 1024 * 1024) {
+                    compressedFile = withContext(Dispatchers.Default) {
+                        Compressor.compress(context, image)
+                    }
+                    compressedFileSize = compressedFile.length()
+                }
+
+                fileFinal = compressedFile ?: image
+            }
+
+            val requestFile = fileFinal?.asRequestBody("image/*".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData("image", fileFinal?.name, requestFile!!)
+
+            try {
+                val response = waterPredictionService.predictQuality(token, body)
+                if (response.isSuccessful) {
+                    val prediction = response.body()?.data?.prediction
+                    _isSuccess.value = true
+                    _predictionResponse.value = response.body()!!.data
+                    _cleanlinessPercentage.value = Helper.formatToDecimal(prediction?.toFloat()!!)
+
+                    Log.d("RESULT_BY_DATA", "Result: $prediction")
+                    determineDrinkable(prediction)
+                } else if (response.code() == 400){
+                    _isPhotoInvalid.value = true
+                }   else {
+                    _isError.value = true
+                    Log.e("predictQuality", "Error: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                _isError.value = true
+                Log.e("predictQuality", "Error: $e")
+            }
+
+            setLoadingState(false)
+        }
     }
 
     fun setLoadingState(isLoading: Boolean) {
         _isLoading.value = isLoading
     }
 
-    private fun determineDrinkable(result: Float) {
-        return if (result > Const.CLEAN_WATER_THRESHOLD) {
+    private fun determineDrinkable(result: Number) {
+        return if (result.toFloat() > Const.CLEAN_WATER_THRESHOLD) {
             _isDrinkable.value = true
         } else {
             _isDrinkable.value = false

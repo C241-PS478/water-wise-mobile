@@ -7,8 +7,47 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_rounded_white_md"
     android:paddingHorizontal="20dp"
-    android:layout_marginHorizontal="20dp"
-    android:paddingVertical="20dp">
+    android:paddingVertical="20dp"
+    android:id="@+id/form_review_dialog_root"
+    >
+
+    <LinearLayout
+        android:id="@+id/review_form_loader"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationZ="100dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:visibility="visible"
+        >
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:lottie_fileName="loadingWater.json"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:text="Fetching your location ..."
+            />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
@@ -55,8 +94,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
         android:layout_marginTop="13dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

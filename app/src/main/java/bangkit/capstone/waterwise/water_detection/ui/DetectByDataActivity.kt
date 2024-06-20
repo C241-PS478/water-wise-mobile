@@ -174,7 +174,6 @@ class DetectByDataActivity : AppCompatActivity() {
 
         val submitBtn = reviewDialog.findViewById<Button>(R.id.send_review_btn)
         submitBtn.setOnClickListener {
-            detectWaterViewModel.sendReview()
             reviewDialog.dismiss()
         }
 
