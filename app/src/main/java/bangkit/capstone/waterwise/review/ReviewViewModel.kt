@@ -70,7 +70,7 @@ class ReviewViewModel: ViewModel() {
 
         viewModelScope.launch {
             try {
-                val response = reviewService.createReview(
+                val response = reviewService.createReviewFromPredictionByIotData(
                     token,
                     predictionIotId,
                     lat,
