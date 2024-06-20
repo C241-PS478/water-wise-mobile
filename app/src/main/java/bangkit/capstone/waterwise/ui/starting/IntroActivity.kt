@@ -10,7 +10,6 @@ import bangkit.capstone.waterwise.adapter.IntroPagerAdapter
 import bangkit.capstone.waterwise.data.datastore.model.IntroItem
 import bangkit.capstone.waterwise.databinding.ActivityIntroBinding
 import bangkit.capstone.waterwise.ui.authentication.LoginActivity
-import bangkit.capstone.waterwise.water_detection.ui.CameraActivity
 import com.google.android.material.tabs.TabLayoutMediator
 
 class IntroActivity : AppCompatActivity() {
@@ -22,12 +21,9 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_intro)
+        binding = ActivityIntroBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        binding.skipIntro.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
 
         introItems = listOf(
             IntroItem(R.drawable.intro_illustration_1, "Welcome to WaterWise!", "Experience the power of technology in ensuring clean water. WaterWise helps you detect water clarity and share your findings with others. Join a global community committed to clean water."),
@@ -56,7 +52,7 @@ class IntroActivity : AppCompatActivity() {
 
         binding.btnNext.setOnClickListener {
             if (binding.viewPager2.currentItem < introItems.size - 1) {
-                binding.viewPager2.currentItem += 1
+                binding.viewPager2.currentItem = binding.viewPager2.currentItem + 1
             } else {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()

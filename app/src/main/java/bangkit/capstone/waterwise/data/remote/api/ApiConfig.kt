@@ -29,7 +29,7 @@ class ApiConfig {
                 .addInterceptor(authInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.baseurl)
+                .baseUrl(BuildConfig.baseapiurl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
