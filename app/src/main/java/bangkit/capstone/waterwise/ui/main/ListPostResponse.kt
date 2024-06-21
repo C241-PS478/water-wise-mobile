@@ -19,7 +19,7 @@ data class ListPostResponse(
 )
 
 @Parcelize
-@Entity(tableName = "story_list")
+@Entity(tableName = "list_post")
 data class ListPostItem(
 
     @field:SerializedName("photoUrl")

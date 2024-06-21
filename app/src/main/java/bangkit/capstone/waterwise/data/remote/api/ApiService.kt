@@ -3,10 +3,13 @@ package bangkit.capstone.waterwise.data.remote.api
 import bangkit.capstone.waterwise.data.remote.response.LoginResponse
 import bangkit.capstone.waterwise.data.remote.response.RegisterResponse
 import bangkit.capstone.waterwise.ui.main.ListPostResponse
+import bangkit.capstone.waterwise.water_detection.PredictionResponse
+import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -26,7 +29,7 @@ interface ApiService {
     suspend fun login(
         @Field("username") username: String,
         @Field("password") password: String
-    ): LoginResponse
+    ): Response<LoginResponse>
 
     // Login with Google
     @FormUrlEncoded
@@ -34,10 +37,15 @@ interface ApiService {
     suspend fun loginWithGoogle(
         @Field("firebaseId") firebaseId: String,
         @Field("email") email: String
-    ): LoginResponse
+    ): Response<LoginResponse>
 
     @GET("sources")
     suspend fun getPostWithLocation(
         @Query("location") location: Int = 1,
     ): ListPostResponse
+
+    @GET("predictions/{id}")
+    suspend fun getPredictionById(
+        @Path("id") id: String
+    ): PredictionResponse
 }

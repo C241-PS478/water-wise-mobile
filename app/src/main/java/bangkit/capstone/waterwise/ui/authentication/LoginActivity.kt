@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.credentials.CredentialManager
@@ -13,7 +12,6 @@ import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.data.datastore.model.UserModel
@@ -161,10 +159,11 @@ class LoginActivity : AppCompatActivity() {
                             null
                         )
 
+                        val data = result.data.data
                         val user = UserModel(
-                            result.data.loginResult.token,
-                            result.data.loginResult.name,
-                            result.data.loginResult.userId,
+                            data?.token!!,
+                            data.user?.name!!,
+                            data.user.id!!,
                             true
                         )
                         viewModel.saveSession(user)
@@ -232,10 +231,11 @@ class LoginActivity : AppCompatActivity() {
                             duration = MotionToast.LONG_DURATION,
                             null
                         )
+                        val data = result.data.data
                         val user = UserModel(
-                            result.data.loginResult.name,
-                            result.data.loginResult.userId,
-                            result.data.loginResult.token,
+                            data?.token!!,
+                            data.user?.name!!,
+                            data.user.id!!,
                             true
                         )
                         viewModel.saveSession(user)

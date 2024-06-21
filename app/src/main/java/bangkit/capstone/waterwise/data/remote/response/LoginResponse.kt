@@ -4,26 +4,43 @@ import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
 
-    @field:SerializedName("loginResult")
-	val loginResult: LoginResult,
+	@field:SerializedName("data")
+	val data: Data? = null,
 
-    @field:SerializedName("error")
-	val error: Boolean,
-
-    @field:SerializedName("message")
-	val message: String
+	@field:SerializedName("message")
+	val message: String? = null
 )
 
-data class LoginResult(
+data class Data(
 
-	@field:SerializedName("name")
-	val name: String,
-
-	@field:SerializedName("userId")
-	val userId: String,
+	@field:SerializedName("user")
+	val user: User? = null,
 
 	@field:SerializedName("token")
-	val token: String,
+	val token: String? = null
+)
 
+data class User(
+
+	@field:SerializedName("phoneNumber")
+	val phoneNumber: String? = null,
+
+	@field:SerializedName("firebaseId")
+	val firebaseId: Any? = null,
+
+	@field:SerializedName("name")
+	val name: String? = null,
+
+	@field:SerializedName("id")
+	val id: String? = null,
+
+	@field:SerializedName("isAdmin")
+	val isAdmin: Boolean? = null,
+
+	@field:SerializedName("email")
+	val email: String? = null,
+
+	@field:SerializedName("username")
+	val username: String? = null
 )
 

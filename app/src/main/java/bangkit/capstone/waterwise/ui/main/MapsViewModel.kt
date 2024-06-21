@@ -5,5 +5,6 @@ import bangkit.capstone.waterwise.data.datastore.repository.UserRepository
 
 class MapsViewModel(private val userRepository: UserRepository): ViewModel() {
 
+    fun getPostLocation() = userRepository.getPostWithLocation()
 
 }
