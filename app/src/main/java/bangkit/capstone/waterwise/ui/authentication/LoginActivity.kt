@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -37,7 +39,9 @@ import www.sanju.motiontoast.MotionToastStyle
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var viewModel: AuthViewModel
+    private val viewModel by viewModels<AuthViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
     private lateinit var auth: FirebaseAuth
     private lateinit var customToast: CustomToast
 
@@ -133,8 +137,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[AuthViewModel::class.java]
-
         viewModel.loginGoogleResult.observe(this) { result ->
             if (result != null) {
                 when (result) {
@@ -188,67 +190,69 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.loginButton.setOnClickListener {
-            val email = binding.emailEditText.text.toString()
+            val username = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
 
-            if (email.isEmpty() || password.isEmpty()) {
+            if (username.isEmpty() || password.isEmpty()) {
                 MotionToast.createColorToast(
                     this@LoginActivity,
                     title = "Error",
-                    message = "Email or password cannot be empty",
+                    message = "Username or password cannot be empty",
                     style = MotionToastStyle.ERROR,
                     position = Gravity.BOTTOM,
                     duration = MotionToast.LONG_DURATION,
-                    null
+                    return@setOnClickListener
                 )
-                return@setOnClickListener
+            }else {
+                login(username, password)
             }
-
-            showLoading(true)
-
-            viewModel.login(email, password)
         }
+    }
 
-        viewModel.loginResult.observe(this) { result ->
-            when (result) {
-                is Result.Loading -> {
-                    showLoading(true)
-                }
-                is Result.Success -> {
-                    showLoading(false)
-                    MotionToast.createColorToast(
-                        this@LoginActivity,
-                        title = "Success",
-                        message = getString(R.string.login_success),
-                        style = MotionToastStyle.SUCCESS,
-                        position = Gravity.BOTTOM,
-                        duration = MotionToast.LONG_DURATION,
-                        null
-                    )
-
-                    val user = UserModel(
-                        result.data.loginResult.token,
-                        result.data.loginResult.name,
-                        result.data.loginResult.userId,
-                        true
-                    )
-                    viewModel.saveSession(user)
-
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                is Result.Error -> {
-                    showLoading(false)
-                    MotionToast.createColorToast(
-                        this@LoginActivity,
-                        title = "Error",
-                        message = result.error,
-                        style = MotionToastStyle.ERROR,
-                        position = Gravity.BOTTOM,
-                        duration = MotionToast.LONG_DURATION,
-                        null
-                    )
+    private fun login(username: String, password: String) {
+        showLoading(true)
+        viewModel.login(username, password).observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                    }
+                    is Result.Success -> {
+                        showLoading(false)
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        MotionToast.createColorToast(
+                            this@LoginActivity,
+                            title = "SUCCESS",
+                            message = "Login Success!",
+                            style = MotionToastStyle.SUCCESS,
+                            position = Gravity.BOTTOM,
+                            duration = MotionToast.LONG_DURATION,
+                            null
+                        )
+                        val user = UserModel(
+                            result.data.loginResult.name,
+                            result.data.loginResult.userId,
+                            result.data.loginResult.token,
+                            true
+                        )
+                        viewModel.saveSession(user)
+                        finish()
+                    }
+                    is Result.Error -> {
+                        showLoading(false)
+                        MotionToast.createColorToast(
+                            this@LoginActivity,
+                            title = "Error",
+                            message = result.error,
+                            style = MotionToastStyle.ERROR,
+                            position = Gravity.BOTTOM,
+                            duration = MotionToast.LONG_DURATION,
+                            null
+                        )
+                    }
                 }
             }
         }

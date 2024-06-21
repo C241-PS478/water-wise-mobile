@@ -18,19 +18,19 @@ class AuthViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _loginGoogleResult = MutableLiveData<Result<LoginResponse>>()
     val loginGoogleResult: LiveData<Result<LoginResponse>> get() = _loginGoogleResult
 
-    fun login(email: String, password: String) {
-        viewModelScope.launch {
-            userRepository.login(email, password)
-        }
-    }
+
+
+    fun login(
+        username: String,
+        password: String
+    ): LiveData<Result<LoginResponse>> = userRepository.login(username, password)
 
     fun register(
         name: String,
-        phoneNumber: String,
         username: String,
         email: String,
         password: String
-    ): LiveData<Result<RegisterResponse>> = userRepository.register(name, phoneNumber, username, email, password)
+    ): LiveData<Result<RegisterResponse>> = userRepository.register(name, username, email, password)
 
     fun getSession() {
         viewModelScope.launch {

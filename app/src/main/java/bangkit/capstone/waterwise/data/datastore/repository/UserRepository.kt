@@ -2,20 +2,16 @@ package bangkit.capstone.waterwise.data.datastore.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.lifecycle.liveData
-import bangkit.capstone.waterwise.data.remote.api.ApiService
 import bangkit.capstone.waterwise.data.datastore.model.UserModel
 import bangkit.capstone.waterwise.data.datastore.pref.UserPreference
 import bangkit.capstone.waterwise.data.remote.api.ApiConfig
+import bangkit.capstone.waterwise.data.remote.api.ApiService
 import bangkit.capstone.waterwise.data.remote.response.LoginResponse
 import bangkit.capstone.waterwise.data.remote.response.RegisterResponse
 import bangkit.capstone.waterwise.result.Result
-import bangkit.capstone.waterwise.ui.main.ListPostResponse
-import bangkit.capstone.waterwise.water_detection.PredictionResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 
 class UserRepository private constructor(
@@ -28,15 +24,14 @@ class UserRepository private constructor(
 
     fun register(
         name: String,
-        phoneNumber: String,
         username: String,
         email: String,
         password: String
     ): LiveData<Result<RegisterResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val registerResponse = apiService.register(name, phoneNumber, username, email, password)
-            if (registerResponse.error == false) {
+            val registerResponse = apiService.register(name, username, email, password)
+            if (!registerResponse.error) {
                 emit(Result.Success(registerResponse))
             } else {
                 emit(Result.Error(registerResponse.message))
@@ -51,21 +46,33 @@ class UserRepository private constructor(
         }
     }
 
-    suspend fun login(email: String, password: String) {
-        _loginResult.postValue(Result.Loading)
+    fun login(
+        username: String,
+        password: String
+    ) = liveData {
+        emit(Result.Loading)
         try {
-            val response = apiService.login(email, password)
-            if (!response.error) {
-                _loginResult.postValue(Result.Success(response))
+            val responseLogin = apiService.login(username, password)
+            if (responseLogin.error == false) {
+                val token = UserModel(
+                    name = responseLogin.loginResult.name,
+                    userId = responseLogin.loginResult.userId,
+                    token = responseLogin.loginResult.token,
+                    isLogin = true
+                )
+                ApiConfig.token = responseLogin.loginResult.token
+                userPreference.saveSession(token)
+                emit(Result.Success(responseLogin))
             } else {
-                _loginResult.postValue(Result.Error("Login failed: ${response.message}"))
+                emit(Result.Error(responseLogin.message))
             }
         } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
-            _loginResult.postValue(Result.Error("Login failed: ${errorResponse.message}"))
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, LoginResponse::class.java)
+            val errorMessage = errorBody?.message ?: "An error occurred"
+            emit(Result.Error("Login failed: $errorMessage"))
         } catch (e: Exception) {
-            _loginResult.postValue(Result.Error("An unexpected error occurred: ${e.message}"))
+            emit(Result.Error("Internet Issues"))
         }
     }
 

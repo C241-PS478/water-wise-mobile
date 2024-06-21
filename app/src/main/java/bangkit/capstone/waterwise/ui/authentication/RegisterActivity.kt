@@ -63,15 +63,15 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 else -> {
                     showLoading(true)
-                    register(name, phoneNumber, username, email, password)
+                    register(name, username, email, password)
                 }
             }
         }
     }
 
-    private fun register(name: String, phoneNumber: String, username: String, email: String, password: String) {
+    private fun register(name: String, username: String, email: String, password: String) {
         showLoading(true)
-        viewModel.register(name, phoneNumber, username, email, password).observe(this) { result ->
+        viewModel.register(name, username, email, password).observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
@@ -90,7 +90,7 @@ class RegisterActivity : AppCompatActivity() {
                             null
                         )
                         viewModel.getSession()
-                        startActivity(Intent(this, RegisterActivity::class.java))
+                        startActivity(Intent(this, LoginActivity::class.java))
                         finish()
                     }
 
