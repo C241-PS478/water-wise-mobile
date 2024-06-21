@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit.SECONDS
 
 
 object Api {
-    private val baseUrl = BuildConfig.baseapiurl
+    private val baseUrl = BuildConfig.BASE_API_URL
 
     private val loggingInterceptor = if(BuildConfig.DEBUG) {
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
