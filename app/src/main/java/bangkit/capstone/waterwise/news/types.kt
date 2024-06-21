@@ -49,4 +49,4 @@ data class News(
 
 const val QUERY_SEARCH_PARAM = "water"
 const val PAGE_SIZE = 10
-const val MAX_PAGE_SIZE = 100
+const val MAX_PAGE_SIZE = 30

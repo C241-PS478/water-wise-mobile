@@ -10,8 +10,8 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
+import bangkit.capstone.waterwise.BuildConfig
 import bangkit.capstone.waterwise.R
 import bangkit.capstone.waterwise.data.datastore.model.UserModel
 import bangkit.capstone.waterwise.data.datastore.pref.UserDataStore
@@ -20,7 +20,7 @@ import bangkit.capstone.waterwise.data.datastore.repository.UserRepository
 import bangkit.capstone.waterwise.data.remote.api.ApiConfig
 import bangkit.capstone.waterwise.data.remote.api.ApiService
 import bangkit.capstone.waterwise.databinding.ActivityMainBinding
-import bangkit.capstone.waterwise.news.NewsAdapter
+import bangkit.capstone.waterwise.news.NewsHorizontalAdapter
 import bangkit.capstone.waterwise.news.NewsViewModel
 import bangkit.capstone.waterwise.news.ui.NewsActivity
 import bangkit.capstone.waterwise.result.Result
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
-    private val newsAdapter = NewsAdapter()
+    private val newsAdapter = NewsHorizontalAdapter()
     private val newsViewModel = NewsViewModel()
 
     private val loadingDialog by lazy { Helper.loadingDialog(this) }
@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userPreference: UserPreference
 
     private lateinit var userSession: UserModel
-    private lateinit var userData: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,12 +60,14 @@ class MainActivity : AppCompatActivity() {
             updateUI(user)
         }
 
+        val newsApiToken = "Bearer  ${BuildConfig.NEWS_API_KEY}"
+        newsViewModel.findSome(newsApiToken)
+        newsViewModel.listNews.observe(this) {
+            newsAdapter.submitList(it)
+        }
+
         binding.mapThumbnail.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
-            startActivity(intent)
-        }
-        binding.btnDetectImage.setOnClickListener {
-            val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
         }
         binding.btnDetectData.setOnClickListener {
@@ -108,13 +109,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            newsViewModel.findAllPaginated().cachedIn(lifecycleScope).observe(this@MainActivity) { pagingData ->
-                lifecycleScope.launch {
-                    try {
-                        newsAdapter.submitData(pagingData)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+            btnDetectImage.setOnClickListener{
+                if (Helper.isPermissionGranted(this@MainActivity, Manifest.permission.CAMERA)) {
+                    startActivity(Intent(this@MainActivity, CameraActivity::class.java))
+                } else {
+                    ActivityCompat.requestPermissions(
+                        this@MainActivity,
+                        arrayOf(Manifest.permission.CAMERA),
+                        10
+                    )
                 }
             }
 
@@ -130,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         binding.newsRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
             isNestedScrollingEnabled = false
             adapter = newsAdapter
         }
