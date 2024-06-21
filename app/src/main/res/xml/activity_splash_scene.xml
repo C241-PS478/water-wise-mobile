@@ -16,13 +16,13 @@
             android:visibility="invisible" />
         <Constraint
             android:id="@+id/textView"
-            motion:layout_constraintEnd_toEndOf="@id/splashImage"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             motion:layout_constraintTop_toBottomOf="@id/splashImage"
-            motion:layout_constraintStart_toStartOf="@id/splashImage"
+            motion:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="48dp"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            motion:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -36,13 +36,13 @@
             motion:layout_constraintStart_toStartOf="parent" />
         <Constraint
             android:id="@+id/textView"
-            motion:layout_constraintEnd_toEndOf="@id/splashImage"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:textSize="24sp"
             motion:layout_constraintTop_toBottomOf="@id/splashImage"
-            motion:layout_constraintStart_toStartOf="@id/splashImage"
-            android:layout_marginTop="24dp" />
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="24dp"
+            motion:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
     <Transition
         motion:constraintSetStart="@+id/start"
