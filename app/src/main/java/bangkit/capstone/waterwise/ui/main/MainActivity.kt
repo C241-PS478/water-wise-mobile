@@ -25,6 +25,7 @@ import bangkit.capstone.waterwise.news.NewsViewModel
 import bangkit.capstone.waterwise.news.ui.NewsActivity
 import bangkit.capstone.waterwise.result.Result
 import bangkit.capstone.waterwise.ui.MapsActivity
+import bangkit.capstone.waterwise.ui.authentication.LoginActivity
 import bangkit.capstone.waterwise.utils.Helper
 import bangkit.capstone.waterwise.utils.ViewModelFactory
 import bangkit.capstone.waterwise.water_detection.ui.CameraActivity
@@ -121,6 +122,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            btnLogout.setOnClickListener {
+                logout()
+            }
+
             newsViewModel.isLoading.observe(this@MainActivity) {
                 if (it) {
                     loadingDialog.show()
@@ -183,6 +188,14 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             tvHelloName.text = "Hello, ${user.name}"
             userLocation.visibility = View.GONE
+        }
+    }
+
+    private fun logout() {
+        lifecycleScope.launch {
+            userPreference.logout()
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            finish()
         }
     }
 }
