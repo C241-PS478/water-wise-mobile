@@ -15,15 +15,18 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.ViewModelProvider
 import bangkit.capstone.waterwise.R
+import bangkit.capstone.waterwise.data.datastore.pref.UserDataStore
+import bangkit.capstone.waterwise.data.datastore.pref.UserPreference
 import bangkit.capstone.waterwise.databinding.ActivityDetectByDataBinding
 import bangkit.capstone.waterwise.review.ReviewViewModel
 import bangkit.capstone.waterwise.review.types.ReviewFormDialogListener
-import bangkit.capstone.waterwise.utils.Const
 import bangkit.capstone.waterwise.utils.Helper
 import bangkit.capstone.waterwise.water_detection.DetectWaterViewModel
 import bangkit.capstone.waterwise.water_detection.PredictionByDataReq
 import bangkit.capstone.waterwise.water_detection.PredictionMethod
+import bangkit.capstone.waterwise.water_detection.ViewModelFactory
 import bangkit.capstone.waterwise.water_detection.machine_learning.PotabilityIotModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -34,7 +37,7 @@ import www.sanju.motiontoast.MotionToastStyle
 
 class DetectByDataActivity : AppCompatActivity(), ReviewFormDialogListener {
     private lateinit var binding: ActivityDetectByDataBinding
-    private val detectWaterViewModel: DetectWaterViewModel by viewModels()
+    private lateinit var detectWaterViewModel: DetectWaterViewModel
     private val reviewViewModel: ReviewViewModel by viewModels()
 
     private val loadingDialog by lazy { Helper.loadingDialog(this) }
@@ -47,15 +50,19 @@ class DetectByDataActivity : AppCompatActivity(), ReviewFormDialogListener {
     private var latitude: Double? = null
     private var longitude: Double? = null
 
-    private var token: String = "Bearer ${Const.ACCESS_TOKEN}"
+    private var token: String = ""
 
     private lateinit var formReviewDialog: ReviewFormDialog
+    private lateinit var userPreference: UserPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityDetectByDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        userPreference = UserPreference.getInstance(UserDataStore)
+        detectWaterViewModel = ViewModelProvider(this, ViewModelFactory(userPreference))[DetectWaterViewModel::class.java]
 
         formReviewDialog = ReviewFormDialog(reviewViewModel, detectWaterViewModel)
         onReviewSubmitted(PredictionMethod.BY_DATA)
@@ -67,7 +74,11 @@ class DetectByDataActivity : AppCompatActivity(), ReviewFormDialogListener {
 
         inputFields = getAllInputTextFields()
 
-        onTokenRetrieved(token)
+        detectWaterViewModel.getToken().observe(this){
+            token = "Bearer $it"
+            onTokenRetrieved(token)
+        }
+
         with(binding) {
             sendReviewBtnResult.setOnClickListener {
                 showSendReviewFormDialog()

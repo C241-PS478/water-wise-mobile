@@ -16,15 +16,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import bangkit.capstone.waterwise.R
+import bangkit.capstone.waterwise.data.datastore.pref.UserDataStore
+import bangkit.capstone.waterwise.data.datastore.pref.UserPreference
 import bangkit.capstone.waterwise.databinding.ActivityDetectResultBinding
 import bangkit.capstone.waterwise.review.ReviewViewModel
 import bangkit.capstone.waterwise.review.types.ReviewFormDialogListener
-import bangkit.capstone.waterwise.utils.Const.ACCESS_TOKEN
 import bangkit.capstone.waterwise.utils.CustomToast
 import bangkit.capstone.waterwise.utils.Helper
 import bangkit.capstone.waterwise.water_detection.DetectWaterViewModel
 import bangkit.capstone.waterwise.water_detection.PredictionMethod
+import bangkit.capstone.waterwise.water_detection.ViewModelFactory
 import bangkit.capstone.waterwise.water_detection.machine_learning.WaterDetectionModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -40,7 +43,7 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
 
     private val loadingDialog by lazy { Helper.loadingDialog(this) }
 
-    private val detectWaterViewModel: DetectWaterViewModel by viewModels()
+    private lateinit var detectWaterViewModel: DetectWaterViewModel
     private val reviewViewModel: ReviewViewModel by viewModels()
 
     private var photoResult: File? = null
@@ -50,10 +53,11 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
     private var finalImage: File? = null
 
     private lateinit var waterDetectionModel: WaterDetectionModel
-    private var token: String = "Bearer $ACCESS_TOKEN"
+    private var token: String = ""
     private var _rotatedBitmap: Bitmap? = null
 
     private lateinit var formReviewDialog: ReviewFormDialog
+    private lateinit var userPreference: UserPreference
 
     companion object  {
         const val PHOTO_RESULT = "PHOTO_RESULT"
@@ -65,10 +69,11 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
         setContentView(binding.root)
         enableEdgeToEdge()
 
+        userPreference = UserPreference.getInstance(UserDataStore)
+        detectWaterViewModel = ViewModelProvider(this, ViewModelFactory(userPreference))[DetectWaterViewModel::class.java]
+
         formReviewDialog = ReviewFormDialog(reviewViewModel, detectWaterViewModel)
         onReviewSubmitted(PredictionMethod.BY_IMAGE)
-
-        token = "Bearer $ACCESS_TOKEN"
 
         val context = this
         customToast = CustomToast(this)
@@ -112,7 +117,10 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
 
         //TO DO
         // get token from shared preferences
-        onTokenRetrieved(token)
+        detectWaterViewModel.getToken().observe(this){
+            token = "Bearer $it"
+            onTokenRetrieved(token)
+        }
 
         detectWaterViewModel.apply {
             isLoading.observe(context) {
@@ -205,6 +213,10 @@ class DetectResultActivity : AppCompatActivity(), ReviewFormDialogListener {
                 }
             }
         }
+    }
+
+    private fun getUserToken(){
+
     }
 
     private val requestPermissionLauncher = registerForActivityResult(

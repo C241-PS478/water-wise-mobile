@@ -218,6 +218,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                     is Result.Success -> {
                         showLoading(false)
+
                         val intent = Intent(this, MainActivity::class.java)
                         intent.flags =
                             Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -231,14 +232,6 @@ class LoginActivity : AppCompatActivity() {
                             duration = MotionToast.LONG_DURATION,
                             null
                         )
-                        val data = result.data.data
-                        val user = UserModel(
-                            data?.token!!,
-                            data.user?.name!!,
-                            data.user.id!!,
-                            true
-                        )
-                        viewModel.saveSession(user)
                         finish()
                     }
                     is Result.Error -> {

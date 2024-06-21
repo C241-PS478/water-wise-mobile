@@ -6,7 +6,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import bangkit.capstone.waterwise.data.datastore.pref.UserPreference
 import bangkit.capstone.waterwise.utils.Api
 import bangkit.capstone.waterwise.utils.Const
 import bangkit.capstone.waterwise.utils.Helper
@@ -21,7 +23,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class DetectWaterViewModel: ViewModel() {
+class DetectWaterViewModel(private val pref: UserPreference): ViewModel() {
     private val _isSuccess = MutableLiveData<Boolean>()
     val isSuccess : LiveData<Boolean> = _isSuccess
 
@@ -181,5 +183,9 @@ class DetectWaterViewModel: ViewModel() {
         } else {
             _isDrinkable.value = false
         }
+    }
+
+    fun getToken(): LiveData<String> {
+        return pref.getToken().asLiveData()
     }
 }

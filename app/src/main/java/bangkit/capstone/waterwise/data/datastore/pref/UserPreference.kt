@@ -1,6 +1,7 @@
 package bangkit.capstone.waterwise.data.datastore.pref
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -16,6 +17,7 @@ val Context.UserDataStore: DataStore<Preferences> by preferencesDataStore(name =
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
 
     suspend fun saveSession(user: UserModel) {
+        Log.d("UserPreference", "saveSession: $user")
         dataStore.edit { preferences ->
             preferences[NAME_KEY] = user.name
             preferences[USER_ID] = user.userId
@@ -32,6 +34,12 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
                 preferences[TOKEN_KEY].toString(),
                 preferences[IS_LOGIN_KEY] ?: false
             )
+        }
+    }
+
+    fun getToken(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[TOKEN_KEY] ?: ""
         }
     }
 
