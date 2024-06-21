@@ -37,6 +37,7 @@
                 android:fontFamily="@font/poppins_medium" />
 
             <LinearLayout
+                android:id="@+id/user_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -221,6 +222,7 @@
         app:lottie_fileName="loadingWater.json"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

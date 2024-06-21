@@ -4,9 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userPreference: UserPreference
 
     private lateinit var userSession: UserModel
+    private lateinit var userData: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,10 @@ class MainActivity : AppCompatActivity() {
 
         setUserDataFromSession()
         setupRecyclerView()
+
+        userPreference.getSession().asLiveData().observe(this) { user ->
+            updateUI(user)
+        }
 
         binding.mapThumbnail.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
@@ -166,5 +173,13 @@ class MainActivity : AppCompatActivity() {
     private fun initViewModel() {
         val userRepo = UserRepository.getInstance(apiService, userPreference)
         mainViewModel = ViewModelProvider(this, ViewModelFactory(userRepo))[MainViewModel::class.java]
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateUI(user: UserModel) {
+        binding.apply {
+            tvHelloName.text = "Hello, ${user.name}"
+            userLocation.visibility = View.GONE
+        }
     }
 }

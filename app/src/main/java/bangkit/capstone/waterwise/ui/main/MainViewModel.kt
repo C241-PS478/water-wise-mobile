@@ -1,12 +1,11 @@
 package bangkit.capstone.waterwise.ui.main
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import bangkit.capstone.waterwise.data.datastore.model.UserModel
 import bangkit.capstone.waterwise.data.datastore.repository.UserRepository
-import bangkit.capstone.waterwise.data.remote.api.ApiConfig
 import bangkit.capstone.waterwise.data.remote.response.LoginResponse
 import bangkit.capstone.waterwise.news.Service
 import bangkit.capstone.waterwise.remote.response.MainResponse
@@ -27,5 +26,9 @@ class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun findSomeNews() {
         val apiKey = ""
         val client = newsService.findSome(apiKey)
+    }
+
+    fun getUserData(): LiveData<UserModel> {
+        return userRepository.getSession().asLiveData()
     }
 }
