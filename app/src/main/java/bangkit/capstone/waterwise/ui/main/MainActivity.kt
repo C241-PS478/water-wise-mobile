@@ -134,8 +134,8 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.loginResult.observe(this) { result ->
             when (result) {
                 is Result.Success -> {
-                    val loginResult = result.data.loginResult
-                    binding.tvHelloName.text = "Hello, ${loginResult.name}!"
+                    val res = result.data.data
+                    binding.tvHelloName.text = "Hello, ${res?.user?.name}!"
                 }
                 is Result.Error -> {
                     // Handle error, e.g., show a message

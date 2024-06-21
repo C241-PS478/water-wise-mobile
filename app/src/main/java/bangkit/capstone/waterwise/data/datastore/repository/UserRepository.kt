@@ -1,5 +1,6 @@
 package bangkit.capstone.waterwise.data.datastore.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
@@ -51,20 +52,22 @@ class UserRepository private constructor(
         password: String
     ) = liveData {
         emit(Result.Loading)
+        val responseLogin = apiService.login(username, password)
         try {
-            val responseLogin = apiService.login(username, password)
-            if (responseLogin.error == false) {
-                val token = UserModel(
-                    name = responseLogin.loginResult.name,
-                    userId = responseLogin.loginResult.userId,
-                    token = responseLogin.loginResult.token,
+            if (responseLogin.isSuccessful) {
+                val res = responseLogin.body()?.data
+                val user = UserModel(
+                    name = res?.user?.name!!,
+                    userId = res.user.id!!,
+                    token = res.token!!,
                     isLogin = true
                 )
-                ApiConfig.token = responseLogin.loginResult.token
-                userPreference.saveSession(token)
-                emit(Result.Success(responseLogin))
+                ApiConfig.token = res.token
+                userPreference.saveSession(user)
+                emit(Result.Success(responseLogin.body()!!))
+                Log.d("user_repo_login", "Success")
             } else {
-                emit(Result.Error(responseLogin.message))
+                emit(Result.Error(responseLogin.message()))
             }
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()
@@ -77,19 +80,29 @@ class UserRepository private constructor(
     }
 
     suspend fun loginWithGoogle(firebaseId: String, email: String): Result<LoginResponse> {
-        return try {
+        try {
             val response = apiService.loginWithGoogle(firebaseId, email)
-            if (!response.error) {
-                Result.Success(response)
+            if (response.isSuccessful) {
+                val res = response.body()?.data
+                val user = UserModel(
+                    name = res?.user?.name!!,
+                    userId = res.user.id!!,
+                    token = res.token!!,
+                    isLogin = true
+                )
+                ApiConfig.token = res.token
+                userPreference.saveSession(user)
+                return Result.Success(response.body()!!)
             } else {
-                Result.Error("Login failed: ${response.message}")
+                return Result.Error(response.message())
             }
         } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
-            Result.Error("Login failed: ${errorResponse.message}")
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, LoginResponse::class.java)
+            val errorMessage = errorBody?.message ?: "An error occurred"
+            return Result.Error("Login failed: $errorMessage")
         } catch (e: Exception) {
-            Result.Error("An unexpected error occurred: ${e.message}")
+            return Result.Error("Internet Issues")
         }
     }
 
