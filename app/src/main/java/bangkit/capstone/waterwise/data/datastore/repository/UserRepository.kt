@@ -67,7 +67,7 @@ class UserRepository private constructor(
                 emit(Result.Success(responseLogin.body()!!))
                 Log.d("user_repo_login", "Success")
             } else {
-                emit(Result.Error(responseLogin.message()))
+                emit(Result.Error(responseLogin.body()?.message!!))
             }
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()
@@ -75,7 +75,11 @@ class UserRepository private constructor(
             val errorMessage = errorBody?.message ?: "An error occurred"
             emit(Result.Error("Login failed: $errorMessage"))
         } catch (e: Exception) {
-            emit(Result.Error("Internet Issues"))
+            val jsonInString = responseLogin.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, LoginResponse::class.java)
+            val errorMessage = errorBody?.message ?: "An error occurred"
+            Log.e("user_repo_login", "Error: $errorMessage")
+            emit(Result.Error(errorMessage))
         }
     }
 
@@ -94,7 +98,7 @@ class UserRepository private constructor(
                 userPreference.saveSession(user)
                 return Result.Success(response.body()!!)
             } else {
-                return Result.Error(response.message())
+                return Result.Error(response.body()?.message!!)
             }
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()
