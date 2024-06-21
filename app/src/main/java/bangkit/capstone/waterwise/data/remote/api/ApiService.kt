@@ -40,12 +40,8 @@ interface ApiService {
     ): Response<LoginResponse>
 
     @GET("sources")
-    suspend fun getPostWithLocation(
+    fun getPostWithLocation(
         @Query("location") location: Int = 1,
     ): ListPostResponse
 
-    @GET("predictions/{id}")
-    suspend fun getPredictionById(
-        @Path("id") id: String
-    ): PredictionResponse
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import bangkit.capstone.waterwise.di.Injection
 import bangkit.capstone.waterwise.data.datastore.repository.UserRepository
 import bangkit.capstone.waterwise.ui.authentication.AuthViewModel
+import bangkit.capstone.waterwise.ui.main.MapsViewModel
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
 
@@ -14,6 +15,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
         return when {
             modelClass.isAssignableFrom(AuthViewModel::class.java) -> {
                 return AuthViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

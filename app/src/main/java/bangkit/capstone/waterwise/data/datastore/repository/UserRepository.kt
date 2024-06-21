@@ -11,11 +11,9 @@ import bangkit.capstone.waterwise.data.remote.api.ApiService
 import bangkit.capstone.waterwise.data.remote.response.LoginResponse
 import bangkit.capstone.waterwise.data.remote.response.RegisterResponse
 import bangkit.capstone.waterwise.result.Result
-import bangkit.capstone.waterwise.ui.main.ListPostItem
 import bangkit.capstone.waterwise.ui.main.ListPostResponse
 import bangkit.capstone.waterwise.water_detection.PredictionResponse
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
@@ -111,22 +109,13 @@ class UserRepository private constructor(
         }
     }
 
-    fun getPostWithLocation(): LiveData<Result<List<ListPostItem>>> = liveData(Dispatchers.IO) {
+    fun getPostWithLocation(): LiveData<kotlin.Result<ListPostResponse>> = liveData {
         emit(Result.Loading)
         try {
             val getToken = userPreference.getSession().first()
             val apiService = ApiConfig.getApiService(getToken.token)
             val locationPost = apiService.getPostWithLocation()
-
-            val listPostWithPrediction = locationPost.map { post ->
-                val predictionResponse = apiService.getPredictionById(post.predictionId)
-                post.apply {
-                    prediction = predictionResponse.prediction
-                    predictionImageUrl = predictionResponse.imageUrl
-                }
-                post
-            }
-            emit(Result.Success(listPostWithPrediction))
+            emit(Result.Success(locationPost))
         } catch (e: HttpException) {
             val error = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(error, PredictionResponse::class.java)

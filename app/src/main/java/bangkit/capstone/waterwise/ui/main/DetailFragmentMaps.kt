@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import bangkit.capstone.waterwise.R
-import bangkit.capstone.waterwise.adapter.PostMapsAdapter
 import bangkit.capstone.waterwise.databinding.FragmentDetailMapsBinding
-import bangkit.capstone.waterwise.ui.main.ListPostItem
 
 class DetailFragmentMaps : Fragment() {
 
