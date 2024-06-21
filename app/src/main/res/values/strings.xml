@@ -88,4 +88,6 @@
     <string name="something_wrong">Something went wrong, please try again</string>
     <string name="success_alert">Success!</string>
     <string name="error_alert">Error shown!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
